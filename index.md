@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+# Home Page
 
-You can use the [editor on GitHub](https://github.com/Datum-Technology-Corporation/mio_cli/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## [Get Latest Release](https://mooreio.com/packages/mio_cli.tgz)
+### View Documentation online (Coming Soon)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+----------------
 
-### Markdown
+## About
+The [Moore.io](https://www.mooreio.com) Command Line Interface Client (CLI) is your power tool for digital design.
+From generating code, simulating, linting to deep result analysis and management, the MIO CLI is **the** premium tool for the modern ASIC/FPGA design engineer.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+## Management
 
-# Header 1
-## Header 2
-### Header 3
+| **[Issues](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/issues** | **[Discussions](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/discussions)** |
+| **[Sub-Projects](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/projects)** | **[Wiki](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/wiki)** |
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+## Downloads
 
-**Bold** and _Italic_ and `Code` text
+| Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
+| --------------------- | ---------------- | --------------- |
+| [Source Code](https://mooreio.com/packages/mio_cli.tgz) | Source Code (Coming Soon) | Source Code (Coming Soon) |
+| Documentation (Coming Soon) | Documentation (Coming Soon) | Documentation (Coming Soon) |
 
-[Link](url) and ![Image](src)
-```
+> **[View All Releases](releases.md)**
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+## Metrics
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Datum-Technology-Corporation/mio_cli/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+| Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
+| --------------------- | ---------------- | --------------- |
+| Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) |
+| Release Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) |
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+----------------
+
+
+## News
+### 2021/10/29 - Hello, World!
+The Moore.io Core Libraries are being brought online for the very first time. Watch this space in the near future!
