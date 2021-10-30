@@ -42,7 +42,6 @@ Examples:
 """
 
 
-
 from docopt     import docopt
 import os
 import subprocess
