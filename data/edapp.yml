@@ -1,0 +1,145 @@
+---
+# Copyright 2021 Datum Technology Corporation
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+########################################################################################################################
+# Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
+# with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
+#                                       https://solderpad.org/licenses/SHL-2.1/
+# Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
+# an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations under the License.
+########################################################################################################################
+
+
+## README
+# This is an EDApp Metadata file that describes ???
+
+
+core:
+   uid: ef15c1cc-2d1d-4fe6-b3c1-c9872ed1f221
+   name: "eth_mac_10g"
+   type: "rtl-ip"
+   aliases: 
+   full-name: "Ethernet 10G MAC"
+   version: "0.0.1"
+   release-date: 2021-03-28
+   description: >
+      RTL implementation of 802.3 MAC for 10G.
+   keywords: [ "eth", "ethernet", "802.3" ]
+   catalog: "https://moore.io/ip/catalog"
+   suite: 
+   copyright-holders: ["Datum Technology Corporation"]
+   logo: "https://moore.io/assets/images/eth_mac_10g.svg"
+   license: "SHL-2.1"
+   private: False
+
+rtl-ip:
+   type:
+   sub-type:
+   sub-sub-type:
+   block-diagram:
+   languages:
+      - { name: "system-verilog", version: "^" }
+   dependencies :
+      - { name: "mio@fifos_rtl", version: "^", notes: "" }
+      - { name: "mio@counters_rtl", version: "^", notes: "" }
+      - { name: "mio@mem_if_rtl", version: "^", notes: "" }
+   simulators-supported:
+      - { name: "xilinx", version: "2020.2", level: 100, notes: "" }
+      - { name: "xilinx", version: "2019.2", level:  75, notes: "" }
+ 
+
+
+community:
+   contributors:
+      - {
+         name: "David Poulin",
+         org: "Datum Technology Corporation",
+         email: "dpoulin@datumtc.ca",
+         linked-in: "https://www.linkedin.com/in/david-poulin-24674734/"
+      }
+   home-page: "https://github.com/Datum-Technology-Corporation/mio_eth/projects/1"
+   repository:
+      type: "git"
+      url: "https://github.com/Datum-Technology-Corporation/mio_eth"
+   bugs:
+      url: "https://github.com/Datum-Technology-Corporation/mio_et/issues"
+      email: "bugs@moore.io"
+   funding:
+      type: ""
+      url: ""
+
+
+structure:
+   scripts-paths: [ "/bin" ]
+   docs-paths: [ "/docs" ]
+   examples-paths: [ "/examples" ]
+   src-paths: [ "/src" ]
+
+
+hdl-src:
+   files: ["/*/*.sv", "/*/*.svh", "/*/*.sv"]
+   top-files: [ "/uvma_axil_pkg.sv" ]
+   top-modules:
+   tests-paths: [ "/ut" ]
+   compilation-arguments: ["+define+FIFOS_RTL_MAX_DEPTH=1_024"]
+
+
+events:
+   pre-git-pull:
+   post-git-pull:
+      - '$refactor.disconnect("*/*")'
+      - '$refactor.connect("*/*")'
+   pre-init:
+   post-init:
+   pre-library:
+   post-library:
+   pre-compilation:
+   post-compilation:
+   pre-elaboration:
+   post-elaboration:
+   pre-simulation:
+   post-simulation:
+   pre-results-processing:
+   post-results-processing:
+   pre-results-upload:
+   post-results-upload:
+   pre-shutdown:
+   pre-git-commit: [ 'pre-commit.py' ]
+   post-git-commit:
+
+
+parameters:
+   git-pull:
+   init:
+   library:
+   compilation:
+      - {
+         name: "enable-10g",
+         type: "boolean",
+         cli-str: "+define+ETH_MAC_10G25G_RTL_ENABLE_10G",
+         default: True
+      }
+      - {
+         name: "enable-25g",
+         type: "boolean",
+         cli-str: "+define+ETH_MAC_10G25G_RTL_ENABLE_25G",
+         default: True
+      }
+   elaboration:
+   simulation:
+   results-processing:
+   results-upload:
+   shutdown:
+
+
+configuration :
+   # data store for the IP
+
+
+template-metadata:
+   name: ""
+   url: ""
+   input-parameters: null
+
+

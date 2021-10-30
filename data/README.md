@@ -1,0 +1,2 @@
+# MIO Platform Sample Data Structures
+These are sample, prototype files for moore.io used to explore possible requirements. The CLI can be found over at the [mio_platform_core project](https://github.com/Datum-Technology-Corporation/mio_platform_core/blob/main/cli.py).

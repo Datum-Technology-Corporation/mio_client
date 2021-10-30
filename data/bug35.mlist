@@ -1,0 +1,27 @@
+# % mio [@ <version>]
+#    <pre args>
+# $ [<command>]
+#    [<command args>]
+# --
+#    [<ip args>]
+# ---
+#    [<tool args>]
+% mio@0.2.1
+   --config-env='simulators.questa.12.1.path'=QUESTA_12_1_DIR
+   --config=abc=123
+$ sim
+   @my_scope/my_ip@2.1.0-rc.2
+   --test=my_test
+   --seed=23948324
+   --waves='/dp/egress/*'
+   --app=questa@12.1
+--
+   dp-width=32B
+   phy-bypass=yes
+   +define+TEMP_FIX=1  # Single line comments are allowed
+   +NUM_PKTS=232
+   +MIN_PKT_SIZE=32
+   +MAX_PKT_SIZE=500
+---
+   --permissive
+   --hotfix232

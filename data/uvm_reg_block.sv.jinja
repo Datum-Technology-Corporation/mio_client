@@ -1,0 +1,170 @@
+// 
+// Copyright {{ year }} {{ name_of_copyright_owner }}
+// SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+// 
+// Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may
+// not use this file except in compliance with the License, or, at your option,
+// the Apache License version 2.0. You may obtain a copy of the License at
+// 
+//     https://solderpad.org/licenses/SHL-2.1/
+// 
+// Unless required by applicable law or agreed to in writing, any work
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+// 
+
+// This is a jinja2 template (https://jinja.palletsprojects.com/en/2.11.x/templates/)
+
+
+`ifndef __{{ pkg_name.upper() }}_{{ name.upper() }}_REG_BLOCK_SV__
+`define __{{ pkg_name.upper() }}_{{ name.upper() }}_REG_BLOCK_SV__
+
+
+{% if sub_registers.size is ge 1 %}
+// Registers
+{% for register in sub_registers %}
+`include "{{ pkg_name }}_{{ name }}_{{ register.name }}_reg.sv"
+{% endfor %}
+{% endif %}
+{% if sub_register_blocks.size is ge 1 %}
+// Sub-blocks
+{% for register_block in sub_register_blocks %}
+`include "{{ pkg_name }}_{{ name }}_{{ register_block.name }}_reg_block.sv"
+{% endfor %}
+{% endif %}
+
+
+/**
+ * TODO Describe {{ pkg_name }}_{{ name }}_reg_block_c
+ */
+class {{ pkg_name }}_{{ name }}_reg_block_c extends ${base_class};
+   
+   // Sub-Blocks
+   {% if blocks.size is ge 1 %}
+   // Sub-Blocks
+      {% for block in blocks %}
+   rand {{ pkg_name }}_{{ name }}_{{ block.class_name }}_reg_block_c  {{ block.instance_name }};
+      {% endfor %}
+   {% endif %}
+   
+   {% if registers.size is ge 1 %}
+   // Registers
+      {% for register in registers %}
+   rand {{ pkg_name }}_{{ name }}_{{ register.class_name }}_reg_c  {{ register.instance_name }};
+      {% endfor %}
+   {% endif %}
+   
+   
+   `uvm_object_utils_begin({{ pkg_name }}_{{ name }}_reg_block_c)
+   {% if blocks.size is ge 1 %}
+      {% for block in blocks %}
+      `uvm_field_object({{ block.instance_name }}, UVM_DEFAULT)
+      {% endfor %}
+   {% endif %}
+   
+   {% if registers.size is ge 1 %}
+      {% for register in registers %}
+      `uvm_field_object({{ register.instance_name }}, UVM_DEFAULT)
+      {% endfor %}
+   {% endif %}
+   `uvm_object_utils_end
+   
+   
+   /**
+    * Default constructor.
+    */
+   extern function new(string name="{{ pkg_name }}_{{ name }}_reg_block", int has_coverage=UVM_NO_COVERAGE);
+   
+   /**
+    * Creates sub-block(s).
+    */
+   extern virtual function void create_blocks();
+   
+   /**
+    * Creates register(s).
+    */
+   extern virtual function void create_regs();
+   
+   /**
+    * Creates default register map.
+    */
+   extern virtual function void create_reg_map();
+   
+   /**
+    * Adds register(s) to register map.
+    */
+   extern virtual function void add_regs_to_map();
+   
+endclass : {{ pkg_name }}_{{ name }}_reg_block_c
+{% if encryption %}
+`pragma protect begin
+
+
+{% endif %}
+
+
+function {{ pkg_name }}_{{ name }}_reg_block_c::new(string name="{{ pkg_name }}_{{ name }}_reg_block", int has_coverage=UVM_NO_COVERAGE);
+   
+   super.new(name, has_coverage);
+   
+endfunction : new
+   
+{% if blocks.size is ge 1 %}
+
+
+function void {{ pkg_name }}_{{ name }}_reg_block_c::create_blocks();
+   
+   {% for block in blocks %}
+   abc = {{ pkg_name }}_{{ name }}_{{ block.class_name }}_reg_block_c::type_id::create("{{ block.instance_name }}");
+   abc.configure(this);
+   abc.build();
+   
+   
+   {% endfor %}
+   
+endfunction : create_blocks
+{% endif %}
+
+
+function void {{ pkg_name }}_{{ name }}_reg_block_c::create_regs();
+   
+   // TODO Implement {{ pkg_name }}_{{ name }}_reg_block_c::create_regs()
+   //      Ex:  xyz = {{ pkg_name }}_{{ name }}_xyz_reg_c::type_id::create("xyz");
+   //           xyz.configure(this);
+   //           xyz.build();
+   
+endfunction : create_regs
+
+
+function void {{ pkg_name }}_{{ name }}_reg_block_c::create_reg_map();
+   
+   default_map = create_map(
+      .name     ("default_map"),
+      .base_addr(base_address),
+      .n_bytes  (4),
+      .endian   (UVM_LITTLE_ENDIAN)
+   );
+   
+endfunction : create_reg_map
+
+
+function void {{ pkg_name }}_{{ name }}_reg_block_c::add_regs_to_map();
+   
+   // TODO Implement {{ pkg_name }}_{{ name }}_reg_block_c::add_regs_to_map()
+   //      Ex: default_map.add_reg(
+   //             .rg    (xyz),
+   //             .offset(32'h00_00_00_00),
+   //             .rights("RW")
+   //          );
+   
+endfunction : add_regs_to_map
+{% if encryption %}
+
+
+`pragma protect end
+{% endif %}
+
+
+`endif // _{{ pkg_name.upper() }}_{{ name.upper() }}_REG_BLOCK_SV__

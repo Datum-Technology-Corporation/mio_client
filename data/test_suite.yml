@@ -1,0 +1,89 @@
+---
+# Copyright 2021 Datum Technology Corporation
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+########################################################################################################################
+# Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
+# with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
+#                                       https://solderpad.org/licenses/SHL-2.1/
+# Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
+# an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations under the License.
+########################################################################################################################
+
+
+########################################################################################################################
+# DESCRIPTION
+########################################################################################################################
+# 
+# This is a prototype 'test suite' datagram for mio's regression runner.
+# Moore.io uses ip.yml, .mio.toml files as well as the contents here to figure
+# out what (sub-)jobs to dispatch.
+# 
+# Note: each 'target' should be its own file. Only one set of compilation/
+# elaboration parameters are allowed per suite.
+# 
+########################################################################################################################
+
+settings: # Regressions runner settings
+   priority: medium
+   max-concurrent-jobs: 10
+   name: Sample mio Test Suite
+
+parameters:
+   init:
+   library:
+   compilation:
+      max-data-width: 32
+      max-address-width: 32
+   elaboration:
+   simulation:
+   results-processing:
+   results-upload:
+   shutdown:
+
+sets:
+   basic: # This is a 'set'
+      reads: # This is a test grouping
+         test-name: "uvmt_axil_st_reads_test_c"
+         parameters: null
+         regressions:
+            - { name: "sanity", type: "rand-seeds", count: 1 }
+            - { name: "nightly", type: "rand-seeds", count: 10 }
+            - { name: "weekly", type: "rand-seeds", count: 20 }
+      writes:
+         test-name: "uvmt_axil_st_writes_test_c"
+         parameters: null
+         regressions:
+            - { name: "sanity", type: "rand-seeds", count: 1 }
+            - { name: "nightly", type: "rand-seeds", count: 15 }
+            - { name: "weekly", type: "rand-seeds", count: 30 }
+      all_access:
+         test-name: "uvmt_axil_st_all_access_test_c"
+         parameters: null
+         regressions:
+            - { name: "sanity", type: "rand-seeds", count: 1 }
+            - { name: "nightly", type: "rand-seeds", count: 20 }
+            - { name: "weekly", type: "rand-seeds", count: 50 }
+   
+   performance: # This is another 'set'
+      bursts:
+         test-name: "uvmt_axil_st_all_access_test_c"
+         parameters: 
+            max-burst: 100
+         regressions:
+            - { name: "nightly", type: "soak", minutes: 10 }
+            - { name: "weekly", type: "soak", minutes: 60 }
+      sustained:
+         test-name: "uvmt_axil_st_all_access_test_c"
+         parameters:
+            max-burst: 0
+         regressions:
+            - { name: "nightly", type: "soak", minutes: 10 }
+            - { name: "weekly", type: "soak", minutes: 60 }
+   
+   bad-seeds: # One last of these wicked 'set's
+      reads:
+         test-name: "uvmt_axil_st_reads_test_c"
+         parameters: null
+         regressions:
+            - { name: "nightly", type: "set-seeds", seeds: [42,67,99] }

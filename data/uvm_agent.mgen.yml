@@ -1,0 +1,140 @@
+---
+# Copyright 2021 Datum Technology Corporation
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+########################################################################################################################
+# Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
+# with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
+#                                       https://solderpad.org/licenses/SHL-2.1/
+# Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
+# an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations under the License.
+########################################################################################################################
+
+template:
+   uuid: 234b03eb-5fe6-471c-b3ab-3dfcdffda622
+   name: Agent - Simplex; No Layers
+   category: datum_uvm_set
+   description: 'UVM Agent with data transfer in only one direction.'
+   parameters:
+      - group-name: general
+         -
+            default: Datum Technology Corporation
+            name: name_of_copyright_owner
+            type: string
+         -
+            default: ''
+            name: name_full
+            type: string
+         -
+            default: ''
+            name: name
+            type: string
+         -
+            default: 2021
+            name: year
+            type: number
+         -
+            default: false
+            name: encrypted
+            type: boolean
+   files:
+      -
+         executable: 'false'
+         name: 'uvma_${name}/bin/.gitignore'
+         template: agent_simplex_no_layers/bin/.gitignore
+      -
+         executable: 'false'
+         name: 'uvma_${name}/docs/.gitignore'
+         template: agent_simplex_no_layers/docs/.gitignore
+      -
+         executable: 'false'
+         name: 'uvma_${name}/examples/.gitignore'
+         template: agent_simplex_no_layers/examples/.gitignore
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_agent.sv'
+         template: agent_simplex_no_layers/src/comps/agent.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_cov_model.sv'
+         template: agent_simplex_no_layers/src/comps/cov_model.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_drv.sv'
+         template: agent_simplex_no_layers/src/comps/drv.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_mon.sv'
+         template: agent_simplex_no_layers/src/comps/mon.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_mon_trn_logger.sv'
+         template: agent_simplex_no_layers/src/comps/mon_trn_logger.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_seq_item_logger.sv'
+         template: agent_simplex_no_layers/src/comps/seq_item_logger.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/comps/uvma_${name}_sqr.sv'
+         template: agent_simplex_no_layers/src/comps/sqr.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/obj/uvma_${name}_cfg.sv'
+         template: agent_simplex_no_layers/src/obj/cfg.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/obj/uvma_${name}_cntxt.sv'
+         template: agent_simplex_no_layers/src/obj/cntxt.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/obj/uvma_${name}_mon_trn.sv'
+         template: agent_simplex_no_layers/src/obj/mon_trn.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/seq/uvma_${name}_base_seq.sv'
+         template: agent_simplex_no_layers/src/seq/base_seq.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/seq/uvma_${name}_seq_item.sv'
+         template: agent_simplex_no_layers/src/seq/seq_item.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/.gitignore'
+         template: agent_simplex_no_layers/src/.gitignore
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/ip.yaml'
+         template: agent_simplex_no_layers/src/ip.yaml
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_constants.sv'
+         template: agent_simplex_no_layers/src/constants.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_if.sv'
+         template: agent_simplex_no_layers/src/if.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_if_chkr.sv'
+         template: agent_simplex_no_layers/src/if_chkr.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_macros.sv'
+         template: agent_simplex_no_layers/src/macros.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_pkg.sv'
+         template: agent_simplex_no_layers/src/pkg.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/src/uvma_${name}_tdefs.sv'
+         template: agent_simplex_no_layers/src/tdefs.sv
+      -
+         executable: 'false'
+         name: 'uvma_${name}/LICENSE.md'
+         template: LICENSE_solderpad_v2p1.md
+      -
+         executable: 'false'
+         name: 'uvma_${name}/README.md'
+         template: agent_simplex_no_layers/README.md
