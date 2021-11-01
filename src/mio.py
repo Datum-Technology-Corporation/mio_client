@@ -14,6 +14,18 @@
 
 """Moore.io Command Line Interface (CLI) Client.
 
+                              ███╗   ███╗ ██████╗  ██████╗ ██████╗ ███████╗   ██╗ ██████╗
+                              ████╗ ████║██╔═══██╗██╔═══██╗██╔══██╗██╔════╝   ██║██╔═══██╗
+                              ██╔████╔██║██║   ██║██║   ██║██████╔╝█████╗     ██║██║   ██║
+                              ██║╚██╔╝██║██║   ██║██║   ██║██╔══██╗██╔══╝     ██║██║   ██║
+                              ██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║  ██║███████╗██╗██║╚██████╔╝
+                              ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝ ╚═════╝
+                            Moore.io (`mio`) Command Line Interface (CLI) - Pre-Beta Edition
+
+               NOTE: THE FOLLOWING INTERFACE DEFINITION WILL BE SUBJECT TO DEPRECATION IN THE NEAR FUTURE
+                     IN FAVOR OF A MUCH LARGER, FAR BETTER ENCOMPASSING VERSION:
+                           https://github.com/Datum-Technology-Corporation/mio_cli/tree/main/mio/cli
+
 Usage:
   mio all  <target>  [-t <test_name>]  [-s <seed>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
   mio cmp  <target>
@@ -21,8 +33,9 @@ Usage:
   mio cpel <target>
   mio sim  <target>  [-t <test_name>]  [-s <seed>]  [-g | --gui]  [-w | --waves]  [-c | --cov] [-- <args>]
   mio clean
-  mio results  <target> <filename>
-  mio cov      <target>
+  mio results    <target> <filename>
+  mio cov        <target>
+  mio dox <name> <target> <out>
   mio (-h | --help)
   mio --version
 
@@ -60,6 +73,7 @@ sim_debug       = True#False
 sim_gui         = False
 sim_waves       = True
 sim_cov         = False
+glb_args = {}
 
 pwd               = os.getcwd()
 temp_path         = pwd + '/temp'
@@ -134,6 +148,7 @@ def do_dispatch(args):
     global sim_gui
     global sim_waves
     global sim_cov
+    global glb_args
     glb_args = args
     
     if (dbg):
@@ -202,6 +217,8 @@ def do_dispatch(args):
         do_parse_results(args['<target>'], args['<filename>'])
     if args['cov']:
         gen_cov_report(args['<target>'])
+    if args['dox']:
+        gen_doxygen()
 
 
 def set_env_var(name, value):
@@ -590,6 +607,14 @@ def gen_cov_report(sim_lib):
     if not os.path.exists(pwd + "/cov_report"):
         os.mkdir(pwd + "/cov_report")
     run_xsim_bin("xcrg", dir_string + " -report_format all -report_dir " + pwd + "/cov_report/" + sim_lib)
+
+
+
+def gen_doxygen(name, path_in, path_outs):
+    args = ""
+
+    subprocess.call("C:/Program Files/doxygen/bin/doxygen " + path_in + "/bin/doxygen.cfg " + args, shell=True)
+
 
 
 def copy_tree(src, dst, symlinks=False, ignore=None):
