@@ -85,9 +85,9 @@ Options:
    -m          , --m-run               Only prints the mlist file contents for the mio command.
 
 Examples:
-   mio sim !                                            # Re-run last simulation
+   mio sim !                                            # Re-run last simulation command
    mio sim --test=my_test --seed=42 --verbosity=high    # Simulate Default IP with specific test, seed and verbosity
-   mio sim -l bug_dbg -f ./bug35.mlist                  # Simulate using arguments file and a simulation label
+   mio sim -l bug35 -f ./bug35.mlist                    # Simulate using m-list file and a simulation label
    mio sim my_ip -CE -- dp-width=32B --- --permissive   # Compile and elaborate specific IP with IP parameter and tool
                                                           argument
    mio sim some_ip -t my_test -a vcs -x dbg_sigs.tcl    # Run a specific test with VCS and a specific TCL script

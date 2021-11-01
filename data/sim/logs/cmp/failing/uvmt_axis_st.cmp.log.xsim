@@ -1,0 +1,25 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml/src/uvml_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml_logs/src/uvml_logs_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-311] analyzing module uvml_logs_sim_summary
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml_sb/src/uvml_sb_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/uvma_axis/src/uvma_axis_pkg.sv" into library uvmt_axis_st
+ERROR: [VRFC 10-4982] syntax error near 'end' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_drv_vseq.sv:79]
+ERROR: [VRFC 10-2790] SystemVerilog keyword end used in incorrect context [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_drv_vseq.sv:79]
+ERROR: [VRFC 10-4982] syntax error near 'endtask' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_drv_vseq.sv:114]
+ERROR: [VRFC 10-2790] SystemVerilog keyword endtask used in incorrect context [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_drv_vseq.sv:114]
+ERROR: [VRFC 10-4982] syntax error near ';' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:27]
+ERROR: [VRFC 10-4982] syntax error near 'type_id' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:29]
+ERROR: [VRFC 10-8449] previous syntax error is within expansion of macro 'm_uvm_object_registry_internal' defined here [/tools/vivado/2021.1/Vivado/2021.1/data/xsim/system_verilog/uvm_include/uvm_macros.svh:576]
+ERROR: [VRFC 10-2790] SystemVerilog keyword endfunction used in incorrect context [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:29]
+ERROR: [VRFC 10-8449] previous syntax error is within expansion of macro 'm_uvm_object_create_func' defined here [/tools/vivado/2021.1/Vivado/2021.1/data/xsim/system_verilog/uvm_include/uvm_macros.svh:552]
+ERROR: [VRFC 10-8449] previous syntax error is within expansion of macro 'uvm_field_utils_begin' defined here [/tools/vivado/2021.1/Vivado/2021.1/data/xsim/system_verilog/uvm_include/uvm_macros.svh:447]
+ERROR: [VRFC 10-4982] syntax error near ';' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:30]
+ERROR: [VRFC 10-8449] previous syntax error is within expansion of macro 'uvm_sequence_library_utils' defined here [/tools/vivado/2021.1/Vivado/2021.1/data/xsim/system_verilog/uvm_include/uvm_macros.svh:4089]
+ERROR: [VRFC 10-2989] 'uvma_axis_mstr_vseq_lib_c' is not declared [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:30]
+ERROR: [VRFC 10-2790] SystemVerilog keyword endfunction used in incorrect context [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:30]
+ERROR: [VRFC 10-4982] syntax error near ')' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:36]
+ERROR: [VRFC 10-4982] syntax error near 'name' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:41]
+ERROR: [VRFC 10-4982] syntax error near 'endfunction' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:48]
+ERROR: [VRFC 10-2790] SystemVerilog keyword endfunction used in incorrect context [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_mstr_vseq_lib.sv:48]
+ERROR: [VRFC 10-4982] syntax error near 'type_id' [/home/dpoulin/git/uvma_axis/sim/../dv/uvma_axis/src/seq/uvma_axis_slv_base_vseq.sv:22]
+INFO: [#UNDEF] Sorry, too many errors..

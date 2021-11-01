@@ -1,0 +1,5 @@
+Vivado Simulator v2021.1
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: /tools/vivado/2021.1/Vivado/2021.1/bin/unwrapped/lnx64.o/xelab uvmt_axis_st.uvmt_axis_st_tb -ignore_coverage --debug all --incr -relax --O0 -v 0 -s uvmt_axis_st_tb -timescale 1ns/1ps -L uvmt_axis_st=./out/uvmt_axis_st --log /home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st.elab.log 
+Multi-threading is on. Using 22 slave threads.
+ERROR: [XSIM 43-3225] Cannot find design unit uvmt_axis_st.uvmt_axis_st_tb in library work located at xsim.dir/work.

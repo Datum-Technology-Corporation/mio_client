@@ -1,0 +1,308 @@
+#-----------------------------------------------------------
+# xsim v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Wed Oct 27 01:06:12 2021
+# Process ID: 17776
+# Current directory: /home/dpoulin/git/uvma_axis/sim
+# Command line: xsim -log /home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1/sim.log -mode tcl -source {xsim.dir/uvmt_axis_st_tb/xsim_script.tcl}
+# Log file: /home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1/sim.log
+# Journal file: /home/dpoulin/git/uvma_axis/sim/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/uvmt_axis_st_tb/xsim_script.tcl
+# xsim {uvmt_axis_st_tb} -testplusarg SIM_DIR_RESULTS=/home/dpoulin/git/uvma_axis/sim/results -testplusarg UVM_TESTNAME=uvmt_axis_st_rand_traffic_test_c -testplusarg UVML_FILE_BASE_DIR_SIM=/home/dpoulin/git/uvma_axis/sim -testplusarg UVML_FILE_BASE_DIR_TB=/home/dpoulin/git/uvma_axis/sim/../dv/uvmt_axis_st_tb/src -testplusarg UVML_FILE_BASE_DIR_TESTS=/home/dpoulin/git/uvma_axis/sim/../dv/uvmt_axis_st_tb/src/tests -testplusarg UVML_FILE_BASE_DIR_TEST_RESULTS=/home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1 -testplusarg UVML_FILE_BASE_DIR_DV=/home/dpoulin/git/uvma_axis/sim/../dv -testplusarg UVML_FILE_BASE_DIR_RTL=/home/dpoulin/git/uvma_axis/sim/../rtl -wdb {/home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1/waves.wdb} -autoloadwcfg -tclbatch {/home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1/run.xsim.tcl} -stats -ignore_coverage 
+INFO: Functional Coverage will be ignored due to command line switch.
+Time resolution is 1 ps
+source /home/dpoulin/git/uvma_axis/sim/results/uvmt_axis_st_rand_traffic_test_1/run.xsim.tcl
+## log_wave -recursive *
+WARNING: [Simtcl 6-197] One or more HDL objects could not be logged because of object type or size limitations.  To see details please rerun the command with -verbose (-v).
+## run -all
+UVM_INFO /proj/xbuilds/SWIP/2021.1_0402_2220/installs/lin64/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18601) @ 0: reporter [UVM/RELNOTES] 
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+
+  You are using a version of the UVM library that has been compiled
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+----------------------------------------------------------------
+(C) 2013-2014 NVIDIA Corporation
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2007-2014 Mentor Graphics Corporation
+
+
+----------------------------------------------------------------
+
+UVM_INFO /proj/xbuilds/SWIP/2021.1_0402_2220/installs/lin64/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18648) @ 0.000 ns: reporter [NO_DPI_TSTNAME] UVM_NO_DPI defined--getting UVM_TESTNAME directly, without DPI
+UVM_INFO @ 0.000 ns :  reporter [RNTST] Running test uvmt_axis_st_rand_traffic_test_c...
+
+*******************************************************************************
+START OF BUILD PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvmt_axis_st_base_test.sv(264) uvm_test_top [TEST] Top-level environment configuration:
+-----------------------------------------------------------------------------------
+Name                     Type                     Size  Value                      
+-----------------------------------------------------------------------------------
+env_cfg                  uvme_axis_st_cfg_c       -     @397                       
+  enabled                integral                 1     'h1                        
+  is_active              uvm_active_passive_enum  1     UVM_ACTIVE                 
+  scoreboarding_enabled  integral                 1     'h1                        
+  cov_model_enabled      integral                 1     'h1                        
+  trn_log_enabled        integral                 1     'h1                        
+  mstr_cfg               uvma_axis_cfg_c          -     @398                       
+    enabled              integral                 1     'h1                        
+    bypass_mode          integral                 1     'h0                        
+    is_active            uvm_active_passive_enum  1     UVM_ACTIVE                 
+    reset_type           uvml_reset_type_enum     1     UVML_RESET_TYPE_SYNCHRONOUS
+    sqr_arb_mode         uvm_sequencer_arb_mode   32    UVM_SEQ_ARB_RANDOM         
+    cov_model_enabled    integral                 1     'h0                        
+    trn_log_enabled      integral                 1     'h1                        
+    drv_mode             uvma_axis_drv_mode_enum  32    UVMA_AXIS_DRV_MODE_MSTR    
+    drv_idle             uvma_axis_drv_idle_enum  32    UVMA_AXIS_DRV_IDLE_ZEROS   
+    drv_mstr_ton         integral                 32    'd100                      
+    drv_slv_valid_ton    integral                 32    'd29                       
+    drv_slv_idle_ton     integral                 32    'd64                       
+    tdata_width          integral                 32    'd32                       
+    tid_width            integral                 32    'd8                        
+    tdest_width          integral                 32    'd4                        
+    tuser_width          integral                 32    'd32                       
+  slv_cfg                uvma_axis_cfg_c          -     @399                       
+    enabled              integral                 1     'h1                        
+    bypass_mode          integral                 1     'h0                        
+    is_active            uvm_active_passive_enum  1     UVM_ACTIVE                 
+    reset_type           uvml_reset_type_enum     1     UVML_RESET_TYPE_SYNCHRONOUS
+    sqr_arb_mode         uvm_sequencer_arb_mode   32    UVM_SEQ_ARB_FIFO           
+    cov_model_enabled    integral                 1     'h0                        
+    trn_log_enabled      integral                 1     'h1                        
+    drv_mode             uvma_axis_drv_mode_enum  32    UVMA_AXIS_DRV_MODE_SLV     
+    drv_idle             uvma_axis_drv_idle_enum  32    UVMA_AXIS_DRV_IDLE_ZEROS   
+    drv_mstr_ton         integral                 32    'd50                       
+    drv_slv_valid_ton    integral                 32    'd18                       
+    drv_slv_idle_ton     integral                 32    'd88                       
+    tdata_width          integral                 32    'd32                       
+    tid_width            integral                 32    'd8                        
+    tdest_width          integral                 32    'd4                        
+    tuser_width          integral                 32    'd32                       
+  mstr_sb_cfg            uvml_sb_simplex_cfg_c    -     @400                       
+    enabled              integral                 1     'h1                        
+    mode                 uvml_sb_mode_enum        32    UVML_SB_MODE_IN_ORDER      
+    ignore_first_n_act   integral                 32    'd0                        
+    ignore_first_n_exp   integral                 32    'd0                        
+    sync_loss_threshold  integral                 32    'd10                       
+  e2e_sb_cfg             uvml_sb_simplex_cfg_c    -     @401                       
+    enabled              integral                 1     'h1                        
+    mode                 uvml_sb_mode_enum        32    UVML_SB_MODE_IN_ORDER      
+    ignore_first_n_act   integral                 32    'd0                        
+    ignore_first_n_exp   integral                 32    'd0                        
+    sync_loss_threshold  integral                 32    'd10                       
+-----------------------------------------------------------------------------------
+
+UVM_INFO @ 0.000 ns : uvmt_axis_st_base_test.sv(271) uvm_test_top [TIME] Default heartbeat monitor field 'startup_timeout' set to '100000'
+UVM_INFO @ 0.000 ns : uvmt_axis_st_base_test.sv(272) uvm_test_top [TIME] Default heartbeat monitor field 'heartbeat_period' set to '2000'
+UVM_INFO @ 0.000 ns : uvmt_axis_st_base_test.sv(273) uvm_test_top [TIME] Default watchdog field 'timeout' set to '1000000'
+
+*******************************************************************************
+START OF CONNECT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF END_OF_ELABORATION PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : xlnx_uvm_package.sv(20867) reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
+
+*******************************************************************************
+START OF START_OF_SIMULATION PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvml_watchdog.sv(81) uvml_default_watchdog [WATCHDOG] Global Watchdog Timer set to 100000000ns.
+
+*******************************************************************************
+START OF RUN PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvml_hrtbt_mon.sv(120) uvml_default_hrtbt_mon [HRTBT_MON] Starting heartbeat monitor with startup_timeout=100000.000 ns, heartbeat_period=2000.000 ns, refresh_period=5000.000 ns
+
+*******************************************************************************
+START OF PRE_RESET PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF RESET PHASE
+*******************************************************************************
+UVM_INFO @ 5000.000 ns : uvmt_axis_st_base_test.sv(209) uvm_test_top [TEST] Asserting reset for 333.000 ns
+UVM_INFO @ 5005.000 ns : uvma_axis_mon.sv(206) uvm_test_top.env.mstr_agent.monitor [AXIS_MON] Entered IN_RESET state
+UVM_INFO @ 5005.000 ns : uvma_axis_mon.sv(206) uvm_test_top.env.slv_agent.monitor [AXIS_MON] Entered IN_RESET state
+UVM_INFO @ 5333.000 ns : uvmt_axis_st_base_test.sv(213) uvm_test_top [TEST] De-asserted reset
+UVM_INFO @ 5335.000 ns : uvma_axis_mon.sv(213) uvm_test_top.env.mstr_agent.monitor [AXIS_MON] Entered POST_RESET state
+UVM_INFO @ 5335.000 ns : uvma_axis_mon.sv(213) uvm_test_top.env.slv_agent.monitor [AXIS_MON] Entered POST_RESET state
+
+*******************************************************************************
+START OF POST_RESET PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF POST_CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_MAIN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF MAIN PHASE
+*******************************************************************************
+UVM_INFO @ 35000.000 ns : uvmt_axis_st_rand_traffic_test.sv(66) uvm_test_top [TEST] Starting rand_traffic_vseq virtual sequence:
+-----------------------------------------------------------------
+Name               Type                              Size  Value 
+-----------------------------------------------------------------
+rand_traffic_vseq  uvme_axis_st_rand_traffic_vseq_c  -     @383  
+  num_transfers    integral                          32    'd10  
+  min_size         integral                          32    'd64  
+  max_size         integral                          32    'd512 
+  min_gap          integral                          32    'd0   
+  max_gap          integral                          32    'd8   
+  mstr_vseq        object                            -     <null>
+  req              object                            -     <null>
+  rsp              object                            -     <null>
+-----------------------------------------------------------------
+
+UVM_INFO @ 35000.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #1 of 10
+UVM_INFO @ 35875.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 2 cycles before sending next segment
+UVM_INFO @ 35895.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #2 of 10
+UVM_INFO @ 36275.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 2 cycles before sending next segment
+UVM_INFO @ 36295.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #3 of 10
+UVM_INFO @ 36565.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 4 cycles before sending next segment
+UVM_INFO @ 36605.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #4 of 10
+UVM_INFO @ 37655.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 2 cycles before sending next segment
+UVM_INFO @ 37675.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #5 of 10
+UVM_INFO @ 38075.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 2 cycles before sending next segment
+UVM_INFO @ 38095.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #6 of 10
+UVM_INFO @ 38525.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 0 cycles before sending next segment
+UVM_INFO @ 38525.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #7 of 10
+UVM_INFO @ 38815.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 5 cycles before sending next segment
+UVM_INFO @ 38865.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #8 of 10
+UVM_INFO @ 39755.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 5 cycles before sending next segment
+UVM_INFO @ 39805.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #9 of 10
+UVM_INFO @ 40315.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 1 cycles before sending next segment
+UVM_INFO @ 40325.000 ns : uvma_axis_rand_traffic_vseq.sv(78) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Sending payload segment #10 of 10
+UVM_INFO @ 40945.000 ns : uvma_axis_rand_traffic_vseq.sv(84) uvm_test_top.env.mstr_agent.vsequencer@@rand_traffic_vseq.mstr_vseq [AXIS_SEQ] Waiting 4 cycles before sending next segment
+UVM_INFO @ 40985.000 ns : uvmt_axis_st_rand_traffic_test.sv(68) uvm_test_top [TEST] Finished rand_traffic_vseq virtual sequence
+----------------------------------------------------------------------------------------------------------------------
+Name                             Type                              Size  Value                                        
+----------------------------------------------------------------------------------------------------------------------
+rand_traffic_vseq                uvme_axis_st_rand_traffic_vseq_c  -     @383                                         
+  num_transfers                  integral                          32    'd10                                         
+  min_size                       integral                          32    'd64                                         
+  max_size                       integral                          32    'd512                                        
+  min_gap                        integral                          32    'd0                                          
+  max_gap                        integral                          32    'd8                                          
+  mstr_vseq                      uvma_axis_rand_traffic_vseq_c     -     @79710                                       
+    num_transfers                integral                          32    'd10                                         
+    min_size                     integral                          32    'd64                                         
+    max_size                     integral                          32    'd512                                        
+    min_gap                      integral                          32    'd0                                          
+    max_gap                      integral                          32    'd8                                          
+    begin_time                   time                              64    35000.000 ns                                 
+    end_time                     time                              64    40985.000 ns                                 
+    depth                        int                               32    'd2                                          
+    parent sequence (name)       string                            17    rand_traffic_vseq                            
+    parent sequence (full name)  string                            45    uvm_test_top.env.vsequencer.rand_traffic_vseq
+    sequencer                    string                            38    uvm_test_top.env.mstr_agent.vsequencer       
+    req                          object                            -     <null>                                       
+    rsp                          object                            -     <null>                                       
+  begin_time                     time                              64    35000.000 ns                                 
+  end_time                       time                              64    40985.000 ns                                 
+  depth                          int                               32    'd1                                          
+  parent sequence (name)         string                            0     ""                                           
+  parent sequence (full name)    string                            0     ""                                           
+  sequencer                      string                            27    uvm_test_top.env.vsequencer                  
+  req                            object                            -     <null>                                       
+  rsp                            object                            -     <null>                                       
+----------------------------------------------------------------------------------------------------------------------
+
+UVM_INFO @ 45000.000 ns : uvml_hrtbt_mon.sv(264) uvml_default_hrtbt_mon [HRTBT_MON] Heartbeat count is 0. Dropping objection
+
+*******************************************************************************
+START OF POST_MAIN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF POST_SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF EXTRACT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF CHECK PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF REPORT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF FINAL PHASE
+*******************************************************************************
+
+*******************************************************************************
+TEST FINISHED
+*******************************************************************************
+UVM_INFO @ 65000.000 ns : xlnx_uvm_package.sv(13673) reporter [UVM/REPORT/SERVER] [WATCHDOG]     1
+[UVM/RELNOTES]     1
+[UVM/COMP/NAMECHECK]     1
+[TIME]     3
+[TEST]     5
+[RNTST]     1
+[NO_DPI_TSTNAME]     1
+[HRTBT_MON]     2
+[AXIS_SEQ]    20
+[AXIS_MON]     4
+** Report counts by id
+UVM_FATAL :    0
+UVM_ERROR :    0
+UVM_WARNING :    0
+UVM_INFO :   39
+** Report counts by severity
+
+--- UVM Report Summary ---
+
+
+
+*** Test Summary ***
+
+    PPPPPPP    AAAAAA    SSSSSS    SSSSSS   EEEEEEEE  DDDDDDD     
+    PP    PP  AA    AA  SS    SS  SS    SS  EE        DD    DD    
+    PP    PP  AA    AA  SS        SS        EE        DD    DD    
+    PPPPPPP   AAAAAAAA   SSSSSS    SSSSSS   EEEEE     DD    DD    
+    PP        AA    AA        SS        SS  EE        DD    DD    
+    PP        AA    AA  SS    SS  SS    SS  EE        DD    DD    
+    PP        AA    AA   SSSSSS    SSSSSS   EEEEEEEE  DDDDDDD     
+    ----------------------------------------------------------
+                        SIMULATION PASSED                     
+    ----------------------------------------------------------
+$finish called at time : 65 us : File "/tools/vivado/2021.1/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 18699
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:41 . Memory (MB): peak = 2723.754 ; gain = 0.000 ; free physical = 29982 ; free virtual = 50485
+## quit
+INFO: Simulation Memory Usage: 2061560 KB (Peak: 2061560 KB)
+INFO: Simulation CPU Usage: 40500 ms
+INFO: [Common 17-206] Exiting xsim at Wed Oct 27 01:07:09 2021...

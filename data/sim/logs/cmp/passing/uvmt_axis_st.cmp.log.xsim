@@ -1,0 +1,9 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml/src/uvml_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml_logs/src/uvml_logs_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-311] analyzing module uvml_logs_sim_summary
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/.imports/uvml_sb/src/uvml_sb_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/uvma_axis/src/uvma_axis_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/uvme_axis_st/src/uvme_axis_st_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/dpoulin/git/uvma_axis/dv/uvmt_axis_st/src/uvmt_axis_st_pkg.sv" into library uvmt_axis_st
+INFO: [VRFC 10-311] analyzing module uvmt_axis_st_dut_wrap
+INFO: [VRFC 10-311] analyzing module uvmt_axis_st_tb

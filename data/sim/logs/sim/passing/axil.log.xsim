@@ -1,0 +1,248 @@
+#-----------------------------------------------------------
+# xsim v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Tue Oct 26 22:52:26 2021
+# Process ID: 29099
+# Current directory: /home/dpoulin/git/uvma_axil/sim
+# Command line: xsim -log /home/dpoulin/git/uvma_axil/sim/results/uvmt_axil_st_reads_test_1/sim.log -mode tcl -source {xsim.dir/uvmt_axil_st_tb/xsim_script.tcl}
+# Log file: /home/dpoulin/git/uvma_axil/sim/results/uvmt_axil_st_reads_test_1/sim.log
+# Journal file: /home/dpoulin/git/uvma_axil/sim/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/uvmt_axil_st_tb/xsim_script.tcl
+# xsim {uvmt_axil_st_tb} -testplusarg SIM_DIR_RESULTS=/home/dpoulin/git/uvma_axil/sim/results -testplusarg UVM_TESTNAME=uvmt_axil_st_reads_test_c -testplusarg UVML_FILE_BASE_DIR_SIM=/home/dpoulin/git/uvma_axil/sim -testplusarg UVML_FILE_BASE_DIR_TB=/home/dpoulin/git/uvma_axil/sim/../dv/uvmt_axil_st_tb/src -testplusarg UVML_FILE_BASE_DIR_TESTS=/home/dpoulin/git/uvma_axil/sim/../dv/uvmt_axil_st_tb/src/tests -testplusarg UVML_FILE_BASE_DIR_TEST_RESULTS=/home/dpoulin/git/uvma_axil/sim/results/uvmt_axil_st_reads_test_1 -testplusarg UVML_FILE_BASE_DIR_DV=/home/dpoulin/git/uvma_axil/sim/../dv -testplusarg UVML_FILE_BASE_DIR_RTL=/home/dpoulin/git/uvma_axil/sim/../rtl -autoloadwcfg -runall -onerror quit -stats -ignore_coverage 
+INFO: Functional Coverage will be ignored due to command line switch.
+Time resolution is 1 ps
+run -all
+UVM_INFO /proj/xbuilds/SWIP/2021.1_0402_2220/installs/lin64/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18601) @ 0: reporter [UVM/RELNOTES] 
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+
+  You are using a version of the UVM library that has been compiled
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+----------------------------------------------------------------
+(C) 2013-2014 NVIDIA Corporation
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2007-2014 Mentor Graphics Corporation
+
+
+----------------------------------------------------------------
+
+UVM_INFO /proj/xbuilds/SWIP/2021.1_0402_2220/installs/lin64/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18648) @ 0.000 ns: reporter [NO_DPI_TSTNAME] UVM_NO_DPI defined--getting UVM_TESTNAME directly, without DPI
+UVM_INFO @ 0.000 ns :  reporter [RNTST] Running test uvmt_axil_st_reads_test_c...
+
+*******************************************************************************
+START OF BUILD PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvmt_axil_st_base_test.sv(269) uvm_test_top [TEST] Top-level environment configuration:
+---------------------------------------------------------------------------------
+Name                     Type                     Size  Value                    
+---------------------------------------------------------------------------------
+env_cfg                  uvme_axil_st_cfg_c       -     @397                     
+  enabled                integral                 1     'h1                      
+  is_active              uvm_active_passive_enum  1     UVM_ACTIVE               
+  scoreboarding_enabled  integral                 1     'h1                      
+  cov_model_enabled      integral                 1     'h1                      
+  trn_log_enabled        integral                 1     'h1                      
+  mstr_cfg               uvma_axil_cfg_c          -     @398                     
+    enabled              integral                 1     'h1                      
+    is_active            uvm_active_passive_enum  1     UVM_ACTIVE               
+    sqr_arb_mode         uvm_sequencer_arb_mode   32    UVM_SEQ_ARB_STRICT_FIFO  
+    cov_model_enabled    integral                 1     'h1                      
+    trn_log_enabled      integral                 1     'h1                      
+    drv_mode             uvma_axil_mode_enum      32    UVMA_AXIL_MODE_MSTR      
+    addr_bus_width       integral                 32    'd32                     
+    data_bus_width       integral                 32    'd32                     
+    strobe_bus_width     integral                 32    'd4                      
+    drv_idle             uvma_axil_drv_idle_enum  32    UVMA_AXIL_DRV_IDLE_RANDOM
+  slv_cfg                uvma_axil_cfg_c          -     @399                     
+    enabled              integral                 1     'h1                      
+    is_active            uvm_active_passive_enum  1     UVM_ACTIVE               
+    sqr_arb_mode         uvm_sequencer_arb_mode   32    UVM_SEQ_ARB_WEIGHTED     
+    cov_model_enabled    integral                 1     'h1                      
+    trn_log_enabled      integral                 1     'h1                      
+    drv_mode             uvma_axil_mode_enum      32    UVMA_AXIL_MODE_SLV       
+    addr_bus_width       integral                 32    'd32                     
+    data_bus_width       integral                 32    'd32                     
+    strobe_bus_width     integral                 32    'd4                      
+    drv_idle             uvma_axil_drv_idle_enum  32    UVMA_AXIL_DRV_IDLE_ZEROS 
+  sb_cfg                 uvml_sb_simplex_cfg_c    -     @400                     
+    enabled              integral                 1     'h1                      
+    mode                 uvml_sb_mode_enum        32    UVML_SB_MODE_IN_ORDER    
+    ignore_first_n_act   integral                 32    'd0                      
+    ignore_first_n_exp   integral                 32    'd0                      
+    sync_loss_threshold  integral                 32    'd10                     
+---------------------------------------------------------------------------------
+
+UVM_INFO @ 0.000 ns : uvmt_axil_st_base_test.sv(276) uvm_test_top [TIME] Default heartbeat monitor field 'startup_timeout' set to '200000'
+UVM_INFO @ 0.000 ns : uvmt_axil_st_base_test.sv(277) uvm_test_top [TIME] Default heartbeat monitor field 'heartbeat_period' set to '200000'
+UVM_INFO @ 0.000 ns : uvmt_axil_st_base_test.sv(278) uvm_test_top [TIME] Default watchdog field 'timeout' set to '10000000'
+
+*******************************************************************************
+START OF CONNECT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF END_OF_ELABORATION PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : xlnx_uvm_package.sv(20867) reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
+
+*******************************************************************************
+START OF START_OF_SIMULATION PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvml_watchdog.sv(81) uvml_default_watchdog [WATCHDOG] Global Watchdog Timer set to 100000000ns.
+
+*******************************************************************************
+START OF RUN PHASE
+*******************************************************************************
+UVM_INFO @ 0.000 ns : uvml_hrtbt_mon.sv(120) uvml_default_hrtbt_mon [HRTBT_MON] Starting heartbeat monitor with startup_timeout=200000.000 ns, heartbeat_period=200000.000 ns, refresh_period=5000.000 ns
+
+*******************************************************************************
+START OF PRE_RESET PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF RESET PHASE
+*******************************************************************************
+UVM_INFO @ 5000.000 ns : uvmt_axil_st_base_test.sv(211) uvm_test_top [TEST] Asserting reset for 10.000 ns
+UVM_INFO @ 5010.000 ns : uvmt_axil_st_base_test.sv(215) uvm_test_top [TEST] De-asserted reset
+
+*******************************************************************************
+START OF POST_RESET PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF POST_CONFIGURE PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_MAIN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF MAIN PHASE
+*******************************************************************************
+UVM_INFO @ 35000.000 ns : uvmt_axil_st_reads_test.sv(59) uvm_test_top [TEST] Starting reads virtual sequence:
+----------------------------------------------------
+Name         Type                       Size  Value 
+----------------------------------------------------
+reads_vseq   uvme_axil_st_reads_vseq_c  -     @383  
+  slv_seq    object                     -     <null>
+  num_reads  integral                   32    'd74  
+  req        object                     -     <null>
+  rsp        object                     -     <null>
+----------------------------------------------------
+
+UVM_INFO @ 39445.000 ns : uvmt_axil_st_reads_test.sv(61) uvm_test_top [TEST] Finished reads virtual sequence:
+----------------------------------------------------------------------------------------------------------
+Name                             Type                         Size  Value                                 
+----------------------------------------------------------------------------------------------------------
+reads_vseq                       uvme_axil_st_reads_vseq_c    -     @383                                  
+  slv_seq                        uvma_axil_storage_slv_seq_c  -     @2515                                 
+    mem                          aa(int,int)                  0     -                                     
+    begin_time                   time                         64    35000.000 ns                          
+    depth                        int                          32    'd2                                   
+    parent sequence (name)       string                       10    reads_vseq                            
+    parent sequence (full name)  string                       38    uvm_test_top.env.vsequencer.reads_vseq
+    sequencer                    string                       36    uvm_test_top.env.slv_agent.sequencer  
+    req                          object                       -     <null>                                
+    rsp                          object                       -     <null>                                
+  num_reads                      integral                     32    'd74                                  
+  begin_time                     time                         64    35000.000 ns                          
+  end_time                       time                         64    39445.000 ns                          
+  depth                          int                          32    'd1                                   
+  parent sequence (name)         string                       0     ""                                    
+  parent sequence (full name)    string                       0     ""                                    
+  sequencer                      string                       27    uvm_test_top.env.vsequencer           
+  req                            object                       -     <null>                                
+  rsp                            object                       -     <null>                                
+----------------------------------------------------------------------------------------------------------
+
+UVM_INFO @ 240000.000 ns : uvml_hrtbt_mon.sv(264) uvml_default_hrtbt_mon [HRTBT_MON] Heartbeat count is 0. Dropping objection
+
+*******************************************************************************
+START OF POST_MAIN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF PRE_SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF POST_SHUTDOWN PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF EXTRACT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF CHECK PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF REPORT PHASE
+*******************************************************************************
+
+*******************************************************************************
+START OF FINAL PHASE
+*******************************************************************************
+
+*******************************************************************************
+TEST FINISHED
+*******************************************************************************
+UVM_INFO @ 260000.000 ns : xlnx_uvm_package.sv(13673) reporter [UVM/REPORT/SERVER] [WATCHDOG]     1
+[UVM/RELNOTES]     1
+[UVM/COMP/NAMECHECK]     1
+[TIME]     3
+[TEST]     5
+[RNTST]     1
+[NO_DPI_TSTNAME]     1
+[HRTBT_MON]     2
+** Report counts by id
+UVM_FATAL :    0
+UVM_ERROR :    0
+UVM_WARNING :    0
+UVM_INFO :   15
+** Report counts by severity
+
+--- UVM Report Summary ---
+
+
+
+*** Test Summary ***
+
+    PPPPPPP    AAAAAA    SSSSSS    SSSSSS   EEEEEEEE  DDDDDDD     
+    PP    PP  AA    AA  SS    SS  SS    SS  EE        DD    DD    
+    PP    PP  AA    AA  SS        SS        EE        DD    DD    
+    PPPPPPP   AAAAAAAA   SSSSSS    SSSSSS   EEEEE     DD    DD    
+    PP        AA    AA        SS        SS  EE        DD    DD    
+    PP        AA    AA  SS    SS  SS    SS  EE        DD    DD    
+    PP        AA    AA   SSSSSS    SSSSSS   EEEEEEEE  DDDDDDD     
+    ----------------------------------------------------------
+                        SIMULATION PASSED                     
+    ----------------------------------------------------------
+$finish called at time : 260 us : File "/tools/vivado/2021.1/Vivado/2021.1/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 18699
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 2723.750 ; gain = 0.000 ; free physical = 32016 ; free virtual = 52410
+exit
+INFO: Simulation Memory Usage: 178144 KB (Peak: 214404 KB)
+INFO: Simulation CPU Usage: 10730 ms
+INFO: [Common 17-206] Exiting xsim at Tue Oct 26 22:52:52 2021...
