@@ -35,7 +35,7 @@ Usage:
   mio clean
   mio results    <target> <filename>
   mio cov        <target>
-  mio dox <name> <target> <out>
+  mio dox <name> <target>
   mio (-h | --help)
   mio --version
 
@@ -218,7 +218,7 @@ def do_dispatch(args):
     if args['cov']:
         gen_cov_report(args['<target>'])
     if args['dox']:
-        gen_doxygen()
+        gen_doxygen(args['<name>'], args['<target>'])
 
 
 def set_env_var(name, value):
@@ -610,10 +610,9 @@ def gen_cov_report(sim_lib):
 
 
 
-def gen_doxygen(name, path_in, path_outs):
-    args = ""
-
-    subprocess.call("C:/Program Files/doxygen/bin/doxygen " + path_in + "/bin/doxygen.cfg " + args, shell=True)
+def gen_doxygen(name, path_in):
+    args = "SRC_PATH=" + path_in + " MIO_HOME=${MIO_HOME} IP_NAME=" + name
+    subprocess.call(args + " doxygen ../dv/" + name + "/bin/doxygen.cfg", shell=True)
 
 
 

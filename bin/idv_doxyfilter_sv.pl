@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Id$
+# $Id: idv_doxyfilter_sv.pl 135 2010-05-31 19:12:50Z seanoboyle $
 #-----------------------------------------------------------------------------
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -66,9 +66,9 @@
 #        Project:  DoxygenFilterSV
 #
 # File: idv_doxyfilter_sv.pl
-# $LastChangedBy$
-# $LastChangedDate$
-# $LastChangedRevision$
+# $LastChangedBy: seanoboyle $
+# $LastChangedDate: 2010-05-31 12:12:50 -0700 (Mon, 31 May 2010) $
+# $LastChangedRevision: 135 $
 #
 #-----------------------------------------------------------------------------
 
@@ -141,17 +141,14 @@ foreach (@infile) {
    # Skip Comments
    # TODO - this is the same comment routine as in the main section - make in to subroutine
    if (!$blockcomment) {
-      if (s/\/\*(.*)\*\//\/\*\*\//) { # strip comment off of the line; leave the marker
+      if (s/\/\/(.*)\\/\/\/\\/) {
+         $inline_comment = $1;
+      }
+      elsif (s/\/\*(.*)\*\//\/\*\*\//) { # strip comment off of the line; leave the marker
          $inline_block_comment = $1;
-         #print(STDERR $infile_line.": inline block comment \"".$inline_block_comment."\"\n");
       }
-      if (s/\/\/(.*)\\/\/\/\\/) {  # Comment in a macro - leave the line escape
+      elsif (s/\/\/(.*)/\/\//) {
          $inline_comment = $1;
-         #print(STDERR $infile_line.": inline macro comment \"".$inline_comment."\"\n");
-      }
-      elsif (s/\/\/(.*)/\/\//) { # strip comment; leave the marker
-         $inline_comment = $1;
-         #print(STDERR $infile_line.": inline comment \"".$inline_comment."\"\n");
       }
    }
 
@@ -244,17 +241,14 @@ foreach (@infile) {
    #           so we'll put back the comment at the end
    #   - And - comments in macro - leave the line escape
    if (!$blockcomment) {
-      if (s/\/\*(.*)\*\//\/\*\*\//) { # strip comment off of the line; leave the marker
+      if (s/\/\/(.*)\\/\/\/\\/) {
+         $inline_comment = $1;
+      }
+      elsif (s/\/\*(.*)\*\//\/\*\*\//) { # strip comment off of the line; leave the marker
          $inline_block_comment = $1;
-         #print(STDERR $infile_line.": inline block comment \"".$inline_block_comment."\"\n");
       }
-      if (s/\/\/(.*)\\/\/\/\\/) {  # Comment in a macro - leave the line escape
+      elsif (s/\/\/(.*)/\/\//) {
          $inline_comment = $1;
-         #print(STDERR $infile_line.": inline macro comment \"".$inline_comment."\"\n");
-      }
-      elsif (s/\/\/(.*)/\/\//) { # strip comment; leave the marker
-         $inline_comment = $1;
-         #print(STDERR $infile_line.": inline comment \"".$inline_comment."\"\n");
       }
 
    }
@@ -430,7 +424,59 @@ foreach (@infile) {
    #   - continue filtering the line
    #   - skip over strings - including strings that continue over multiple lines
    # TODO: improve algorithm for stringizer replacement -- should only use stringizer on macro arguments
-
+   
+   s/(`uvm_field_utils_begin)(\()(\w*)(\))//;
+   s/`uvm_field_utils_end//;
+   
+   s/(`uvm_object_utils)(\()(\w*)(\))//;;
+   s/(`uvm_object_param_utils)(\()(\w*)(\))//;
+   s/(`uvm_object_param_utils_begin)(\()(\w*)(\))//;
+   s/(`uvm_object_utils_begin)(\()(\w*)(\))//;
+   s/`uvm_object_utils_end//;
+   
+   s/(`uvm_component_utils_begin)(\()(\w*)(\))//;
+   s/(`uvm_component_param_utils_begin)(\()(\w*)(\))//;
+   s/(`uvm_component_utils)(\()(\w*)(\))//;
+   s/`uvm_component_utils_end//;
+   
+   s/(`uvm_field_enum)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_int)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_object)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_string)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_real)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_event)(\()([\s\S]*?)(\))//;
+   
+   s/(`uvm_field_array_int)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_array_object)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_array_string)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_array_enum)(\()([\s\S]*?)(\))//;
+   
+   s/(`uvm_field_sarray_int)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_sarray_object)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_sarray_string)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_sarray_enum)(\()([\s\S]*?)(\))//;
+   
+   s/(`uvm_field_aa_int_string)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_object_string)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_string_string)(\()([\s\S]*?)(\))//;
+   
+   s/(`uvm_field_aa_object_int)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_int)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_int_unsigned)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_integer)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_integer_unsigned)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_byte)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_byte_unsigned)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_shortint)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_shortint_unsigned)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_longint)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_longint_unsigned)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_key)(\()([\s\S]*?)(\))//;
+   s/(`uvm_field_aa_int_enumkey)(\()([\s\S]*?)(\))//;
+   
+   
+   
+   
    # HACK - in OVM `define for _protected is protected
    s/`_protected/protected/;
    # HACK: teal/truss preprocessor macro: `PURE pure
@@ -925,7 +971,7 @@ foreach (@infile) {
    if ($function_start == 1) {
       # put in the parens if they're missing
       if (!/\)\s*;/) {
-         s/;/();/;
+         s/;/();/
       }
       if ($ispure) {
          if(s/;\s*$/ = 0;\n/) {
@@ -1191,3 +1237,4 @@ if ($moduleprogram) {
 if ($modulemodule) {
    print "/** \@defgroup SVmodule Modules */\n";
 }
+
