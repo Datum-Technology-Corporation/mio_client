@@ -1,18 +1,18 @@
 ip:
-  name: "uvme_mio_cli_st"
+  name: "uvma_mio_cli"
   version: "1.0.0 Beta 0"
-  full-name: "Moore.io CLI Testing Grounds UVM Environment"
+  full-name: "Moore.io CLI Testing Grounds UVM Agent"
   type: "DV"
-  sub-type: "UVM Environment"
-  sub-sub-type: "Agent Self-Testing"
+  sub-type: "UVM Agent"
+  sub-sub-type: "Simplex; Non-Layered"
   description: >
-    UVM Environment used for development of Moore.io CLI.  NOT meant for use in actual DV work.
+    UVM Agent used for development of Moore.io CLI.  NOT meant for use in actual DV work.
   home-page: "https://datum-technology-corporation.github.io/mio_cli/"
   repo-uri: "https://github.com/Datum-Technology-Corporation/mio_cli.git"
   bugs: "https://github.com/Datum-Technology-Corporation/mio_cli/issues"
   aliases: []
   logo: ""
-  block-diagram: "docs/env_block_diagram.svg"
+  block-diagram: "docs/agent_block_diagram.svg"
   languages: ["sv"]
   simulators-supported:
     - { name: "vivado", version: "2021.1" }
@@ -30,7 +30,6 @@ dependencies:
   - { type: "DV", name: "uvm"      , repo-uri: "https://github.com/Datum-Technology-Corporation/uvm.git"      , repo-branch: "main", repo-path: "dv/uvm"       }
   - { type: "DV", name: "uvml"     , repo-uri: "https://github.com/Datum-Technology-Corporation/uvml.git"     , repo-branch: "main", repo-path: "dv/uvml"      }
   - { type: "DV", name: "uvml_logs", repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_logs.git", repo-branch: "main", repo-path: "dv/uvml_logs" }
-  - { type: "DV", name: "uvml_sb"  , repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_sb.git"  , repo-branch: "main", repo-path: "dv/uvml_sb"   }
 
 hdl-src:
   top-constructs: []
@@ -38,10 +37,10 @@ hdl-src:
   tests-paths: []
   tests-name-template: ""
   flists:
-    dsim    : ["/uvme_mio_cli_st.flist"      ]
-    riviera : ["/uvme_mio_cli_st.flist"      ]
-    questa  : ["/uvme_mio_cli_st.flist"      ]
-    vcs     : ["/uvme_mio_cli_st.flist"      ]
-    vivado  : ["/uvme_mio_cli_st.flist.xsim" ]
-    xcelium : ["/uvme_mio_cli_st.flist"      ]
+    dsim    : ["/uvma_mio_cli.flist"      ]
+    riviera : ["/uvma_mio_cli.flist"      ]
+    questa  : ["/uvma_mio_cli.flist"      ]
+    vcs     : ["/uvma_mio_cli.flist"      ]
+    vivado  : ["/uvma_mio_cli.flist.xsim" ]
+    xcelium : ["/uvma_mio_cli.flist"      ]
 

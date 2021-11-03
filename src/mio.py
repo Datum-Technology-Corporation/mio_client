@@ -85,9 +85,9 @@ rtl_libs_path     = rtl_path + "/.imports"
 dv_path           = project_dir + "/dv"
 dv_imports_path   = dv_path + "/.imports"
 history_file_path = pwd + "/history.yaml"
-uvm_warning_regex = "UVM_WARNING\s+(.+)\((\d+)\)\s+\@\s+(\d+\.\d+\s+ns)\:\s+(\w+)\s+\[(\w+)\](.+)"
-uvm_error_regex   = "UVM_ERROR\s+(.+)\((\d+)\)\s+\@\s+(\d+\.\d+\s+ns)\:\s+(\w+)\s+\[(\w+)\](.+)"
-uvm_fatal_regex   = "UVM_FATAL\s+(.+)\((\d+)\)\s+\@\s+(\d+\.\d+\s+ns)\:\s+(\w+)\s+\[(\w+)\](.+)"
+uvm_warning_regex = "UVM_WARNING\s+\@.+"
+uvm_error_regex   = "UVM_ERROR\s+\@.+"
+uvm_fatal_regex   = "UVM_FATAL\s+\@.+"
 
 html_report_template = Template("""
 <!doctype html>
