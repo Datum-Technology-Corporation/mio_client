@@ -28,7 +28,7 @@ From generating code, simulating, linting to deep result analysis and management
 
 ## Metrics
 
-| Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
+| Latest Release (v1.0 Beta 0) | Stable (Weekly) | Stable (Nightly) |
 | --------------------- | ---------------- | --------------- |
 | Coverage Report (Coming Soon) | Coverage Report (Coming Soon) | Coverage Report (Coming Soon) |
 | Release Test Report (Coming Soon) | Test Report (Coming Soon) | Test Report (Coming Soon) |
