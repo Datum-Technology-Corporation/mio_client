@@ -30,8 +30,8 @@ From generating code, simulating, linting to deep result analysis and management
 
 | Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
 | --------------------- | ---------------- | --------------- |
-| Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) |
-| Release Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) |
+| Coverage Report (Coming Soon) | Coverage Report (Coming Soon) | Coverage Report (Coming Soon) |
+| Release Test Report (Coming Soon) | Test Report (Coming Soon) | Test Report (Coming Soon) |
 
 
 ----------------
