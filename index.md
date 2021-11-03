@@ -18,7 +18,7 @@ From generating code, simulating, linting to deep result analysis and management
 
 ## Downloads
 
-| Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
+| Latest Release (v1.0 Beta 0) | Stable (Weekly) | Stable (Nightly) |
 | --------------------- | ---------------- | --------------- |
 | [Source Code](https://mooreio.com/packages/mio_cli.tgz) | Source Code (Coming Soon) | Source Code (Coming Soon) |
 | Documentation (Coming Soon) | Documentation (Coming Soon) | Documentation (Coming Soon) |
