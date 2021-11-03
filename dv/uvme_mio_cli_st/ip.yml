@@ -33,15 +33,12 @@ dependencies:
   - { type: "DV", name: "uvml_sb"  , repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_sb.git"  , repo-branch: "main", repo-path: "dv/uvml_sb"   }
 
 hdl-src:
-  top-constructs: []
   directories: [".", "comps", "obj", "seq"]
-  tests-paths: []
-  tests-name-template: ""
   flists:
-    dsim    : ["/uvme_mio_cli_st.flist"      ]
-    riviera : ["/uvme_mio_cli_st.flist"      ]
-    questa  : ["/uvme_mio_cli_st.flist"      ]
-    vcs     : ["/uvme_mio_cli_st.flist"      ]
-    vivado  : ["/uvme_mio_cli_st.flist.xsim" ]
-    xcelium : ["/uvme_mio_cli_st.flist"      ]
+    metrics : [ "src/uvme_mio_cli_st_pkg.flist"      ]
+    riviera : [ "src/uvme_mio_cli_st_pkg.flist"      ]
+    questa  : [ "src/uvme_mio_cli_st_pkg.flist"      ]
+    vcs     : [ "src/uvme_mio_cli_st_pkg.flist"      ]
+    vivado  : [ "src/uvme_mio_cli_st_pkg.flist.xsim" ]
+    xcelium : [ "src/uvme_mio_cli_st_pkg.flist"      ]
 

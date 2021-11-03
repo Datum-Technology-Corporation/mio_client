@@ -32,15 +32,13 @@ dependencies:
   - { type: "DV", name: "uvml_logs", repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_logs.git", repo-branch: "main", repo-path: "dv/uvml_logs" }
 
 hdl-src:
-  top-constructs: []
   directories: [".", "comps", "obj", "seq"]
-  tests-paths: []
   tests-name-template: ""
   flists:
-    dsim    : ["/uvma_mio_cli.flist"      ]
-    riviera : ["/uvma_mio_cli.flist"      ]
-    questa  : ["/uvma_mio_cli.flist"      ]
-    vcs     : ["/uvma_mio_cli.flist"      ]
-    vivado  : ["/uvma_mio_cli.flist.xsim" ]
-    xcelium : ["/uvma_mio_cli.flist"      ]
+    metrics : [ "src/uvma_mio_cli_pkg.flist"      ]
+    riviera : [ "src/uvma_mio_cli_pkg.flist"      ]
+    questa  : [ "src/uvma_mio_cli_pkg.flist"      ]
+    vcs     : [ "src/uvma_mio_cli_pkg.flist"      ]
+    vivado  : [ "src/uvma_mio_cli_pkg.flist.xsim" ]
+    xcelium : [ "src/uvma_mio_cli_pkg.flist"      ]
 

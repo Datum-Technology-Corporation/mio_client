@@ -89,7 +89,7 @@ endfunction : new
 
 function void uvme_mio_cli_st_cov_model_c::sample_cfg();
    
-  mio_cli_st_cfg_cg.sample();
+   mio_cli_st_cfg_cg.sample();
    
 endfunction : sample_cfg
 
@@ -103,14 +103,14 @@ endfunction : sample_cntxt
 
 function void uvme_mio_cli_st_cov_model_c::sample_mio_cli_seq_item();
    
-   mio_cli_st_mio_cli_seq_item_cg.sample();
+   mio_cli_st_seq_item_cg.sample();
    
 endfunction : sample_mio_cli_seq_item
 
 
 function void uvme_mio_cli_st_cov_model_c::sample_mio_cli_mon_trn();
    
-   mio_cli_st_mio_cli_mon_trn_cg.sample();
+   mio_cli_st_mon_trn_cg.sample();
    
 endfunction : sample_mio_cli_mon_trn
 

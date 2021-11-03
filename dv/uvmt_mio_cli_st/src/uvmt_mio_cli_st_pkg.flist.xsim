@@ -17,7 +17,7 @@
 -f ${DV_UVML_SB_SRC_PATH}/uvml_sb_pkg.flist.xsim
 
 // Agents
-// TODO Add dependencies
+-f ${DV_UVMA_MIO_CLI_SRC_PATH}/uvma_mio_cli_pkg.flist.xsim
 
 // Environments
 -f ${DV_UVME_MIO_CLI_ST_SRC_PATH}/uvme_mio_cli_st_pkg.flist.xsim

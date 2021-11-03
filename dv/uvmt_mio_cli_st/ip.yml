@@ -35,13 +35,13 @@ dependencies:
 hdl-src:
   top-constructs: ["uvmt_mio_cli_st_tb", "uvml_logs_summary"]
   directories: [".", "tb", "tests"]
-  tests-paths: ["tests"]
-  tests-name-template: "uvmt_mio_cli_st_{{ name }}_test_c"
+  test-paths: ["tests"]
+  test-name-template: "uvmt_mio_cli_st_{{ name }}_test_c"
   flists:
-    dsim    : ["/uvmt_mio_cli_st.flist"      ]
-    riviera : ["/uvmt_mio_cli_st.flist"      ]
-    questa  : ["/uvmt_mio_cli_st.flist"      ]
-    vcs     : ["/uvmt_mio_cli_st.flist"      ]
-    vivado  : ["/uvmt_mio_cli_st.flist.xsim" ]
-    xcelium : ["/uvmt_mio_cli_st.flist"      ]
+    metrics : [ "src/uvmt_mio_cli_st_pkg.flist"      ]
+    riviera : [ "src/uvmt_mio_cli_st_pkg.flist"      ]
+    questa  : [ "src/uvmt_mio_cli_st_pkg.flist"      ]
+    vcs     : [ "src/uvmt_mio_cli_st_pkg.flist"      ]
+    vivado  : [ "src/uvmt_mio_cli_st_pkg.flist.xsim" ]
+    xcelium : [ "src/uvmt_mio_cli_st_pkg.flist"      ]
 

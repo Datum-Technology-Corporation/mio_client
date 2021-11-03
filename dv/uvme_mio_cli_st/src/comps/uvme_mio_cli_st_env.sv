@@ -24,13 +24,13 @@ class uvme_mio_cli_st_env_c extends uvm_env;
    uvme_mio_cli_st_cntxt_c  cntxt;
    
    // Agents
-   uvma_mio_cli_agent_c  bob_agent;
+   uvma_mio_cli_agent_c    bob_agent;
    uvma_mio_cli_agent_c  alice_agent;
    
    // Components
-   uvme_mio_cli_st_prd_c   predictor;
-   uvml_sb_simplex_c       sb;
-   uvme_mio_cli_st_vsqr_c  vsequencer;
+   uvme_mio_cli_st_prd_c         predictor;
+   uvme_mio_cli_st_sb_simplex_c  sb;
+   uvme_mio_cli_st_vsqr_c        vsequencer;
    
    
    `uvm_component_utils_begin(uvme_mio_cli_st_env_c)
@@ -143,10 +143,6 @@ function void uvme_mio_cli_st_env_c::build_phase(uvm_phase phase);
       if (cfg.is_active) begin
          create_vsequencer();
       end
-      
-      if (cfg.cov_model_enabled) begin
-         create_cov_model();
-      end
    end
    
 endfunction : build_phase
@@ -165,10 +161,6 @@ function void uvme_mio_cli_st_env_c::connect_phase(uvm_phase phase);
       if (cfg.is_active) begin
          assemble_vsequencer();
       end
-      
-      if (cfg.cov_model_enabled) begin
-         connect_coverage_model();
-      end
    end
    
 endfunction: connect_phase
@@ -179,7 +171,7 @@ function void uvme_mio_cli_st_env_c::assign_cfg();
    uvm_config_db#(uvme_mio_cli_st_cfg_c)::set(this, "*", "cfg", cfg);
    uvm_config_db#(uvma_mio_cli_cfg_c   )::set(this, "bob_agent", "cfg", cfg.bob_cfg);
    uvm_config_db#(uvma_mio_cli_cfg_c   )::set(this, "alice_agent", "cfg", cfg.alice_cfg);
-   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb", "cfg", cfg.sb_cfg;
+   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb", "cfg", cfg.sb_cfg);
    
 endfunction: assign_cfg
 
@@ -206,7 +198,7 @@ function void uvme_mio_cli_st_env_c::create_env_components();
    
    if (cfg.scoreboarding_enabled) begin
       predictor = uvme_mio_cli_st_prd_c::type_id::create("predictor", this);
-      sb = uvml_sb_simplex_c::type_id::create("sb", this);
+      sb = uvme_mio_cli_st_sb_simplex_c::type_id::create("sb", this);
    end
    
 endfunction: create_env_components
