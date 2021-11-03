@@ -12,8 +12,8 @@ From generating code, simulating, linting to deep result analysis and management
 
 ## Management
 
-| **[Issues](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/issues)** | **[Discussions](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/discussions)** |
-| **[Sub-Projects](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/projects)** | **[Wiki](https://github.com/Datum-Technology-Corporation/mio_platform_client_cli_mvp/wiki)** |
+| **[Issues](https://github.com/Datum-Technology-Corporation/mio_cli/issues)** | **[Discussions](https://github.com/Datum-Technology-Corporation/mio_cli/discussions)** |
+| **[Sub-Projects](https://github.com/Datum-Technology-Corporation/mio_cli/projects)** | **[Wiki](https://github.com/Datum-Technology-Corporation/mio_cli/wiki)** |
 
 
 ## Downloads
