@@ -1,18 +1,18 @@
 ip:
-  name: "uvme_mio_cli_st"
+  name: "uvmt_mio_cli_st"
   version: "1.0.0 Beta 0"
-  full-name: "Moore.io CLI Testing Grounds UVM Environment"
+  full-name: "Moore.io CLI Testing Grounds UVM Test Bench"
   type: "DV"
-  sub-type: "UVM Environment"
+  sub-type: "UVM Test Bench"
   sub-sub-type: "Agent Self-Testing"
   description: >
-    UVM Environment used for development of Moore.io CLI.  NOT meant for use in actual DV work.
+    UVM Test Bench used for development of Moore.io CLI.  NOT meant for use in actual DV work.
   home-page: "https://datum-technology-corporation.github.io/mio_cli/"
   repo-uri: "https://github.com/Datum-Technology-Corporation/mio_cli.git"
   bugs: "https://github.com/Datum-Technology-Corporation/mio_cli/issues"
   aliases: []
   logo: ""
-  block-diagram: "docs/env_block_diagram.svg"
+  block-diagram: "docs/tb_block_diagram.svg"
   languages: ["sv"]
   simulators-supported:
     - { name: "vivado", version: "2021.1" }
@@ -33,15 +33,15 @@ dependencies:
   - { type: "DV", name: "uvml_sb"  , repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_sb.git"  , repo-branch: "main", repo-path: "dv/uvml_sb"   }
 
 hdl-src:
-  top-constructs: []
-  directories: [".", "comps", "obj", "seq"]
-  tests-paths: []
-  tests-name-template: ""
+  top-constructs: ["uvmt_mio_cli_st_tb", "uvml_logs_summary"]
+  directories: [".", "tb", "tests"]
+  tests-paths: ["tests"]
+  tests-name-template: "uvmt_mio_cli_st_{{ name }}_test_c"
   flists:
-    dsim    : ["/uvme_mio_cli_st.flist"      ]
-    riviera : ["/uvme_mio_cli_st.flist"      ]
-    questa  : ["/uvme_mio_cli_st.flist"      ]
-    vcs     : ["/uvme_mio_cli_st.flist"      ]
-    vivado  : ["/uvme_mio_cli_st.flist.xsim" ]
-    xcelium : ["/uvme_mio_cli_st.flist"      ]
+    dsim    : ["/uvmt_mio_cli_st.flist"      ]
+    riviera : ["/uvmt_mio_cli_st.flist"      ]
+    questa  : ["/uvmt_mio_cli_st.flist"      ]
+    vcs     : ["/uvmt_mio_cli_st.flist"      ]
+    vivado  : ["/uvmt_mio_cli_st.flist.xsim" ]
+    xcelium : ["/uvmt_mio_cli_st.flist"      ]
 
