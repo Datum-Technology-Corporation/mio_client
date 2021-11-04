@@ -43,7 +43,7 @@ def elab(ip_name):
         if dv_yaml:
             if 'dut-ip' in dv_yaml['hdl-src']:
                 rtl_ip_name = dv_yaml['hdl-src']['dut-ip']
-                top_constructs = dv_yaml['hdl-src']['top-constructs']
+                top_dv_constructs = dv_yaml['hdl-src']['top-constructs']
                 if (rtl_ip_name):
                     with open(mio.rtl_path + "/" + rtl_ip_name + "/ip.yml", 'r') as yamlfile:
                         rtl_yaml = yaml.load(yamlfile, Loader=SafeLoader)
@@ -52,7 +52,8 @@ def elab(ip_name):
                             if (rtl_sub_type == "vivado"):
                                 rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
                                 xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
-                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_constructs)
+                                top_rtl_constructs = rtl_yaml['hdl-src']['top-constructs']
+                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
                             else:
                                 print("Elaboration of non-Vivado RTL Project DUTs is not yet supported")
             else:
@@ -62,13 +63,15 @@ def elab(ip_name):
 
 
 
-def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_constructs):
+def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs):
     elaboration_log_path = mio.pwd + "/results/" + lib_name + ".elab.log"
     lib_string = ""
+    top_rtl_constructs_string = ""
+    for construct in top_rtl_constructs:
+        top_rtl_constructs_string = top_rtl_constructs_string + " " + construct
     for lib in xilinx_libs:
         lib_string = lib_string + " -L " + lib
-       #run_xsim_bin("xelab", "--relax --debug all --mt auto -L " + lib_name + " -L neural_net -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot " + design_unit + " " + lib_name + "." + design_unit + " neural_net.glbl -log elaborate.log")
-    mio.run_xsim_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_constructs[0] + " " + ip_name + "." + top_constructs[0] + " " + lib_name + ".glbl --log " + elaboration_log_path)
+    mio.run_xsim_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
