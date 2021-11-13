@@ -71,17 +71,18 @@ def update_sim_timestamp_in_history_log(snapshot, orig_timestamp, tests_results_
 
 
 
-def sim(ip_name, test, seed, verbosity, args):
+def sim(cfg, ip_name, test, seed, verbosity, args):
     with open(mio.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
             test_name = dv_yaml['hdl-src']['test-name-template'].replace("{{ name }}", test)
-            do_sim(ip_name, test_name, seed, verbosity, args)
+            do_sim(cfg, ip_name, test_name, seed, verbosity, args)
 
 
 
 
-def do_sim(lib_name, name, seed, verbosity, plus_args):
+def do_sim(cfg, lib_name, name, seed, verbosity, plus_args):
+    
     snapshot = lib_name + "_tb"
     test_name = name
     waves_str = ""
@@ -112,14 +113,14 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     if not os.path.exists(tests_results_path + "/trn_log"):
         os.mkdir(tests_results_path + "/trn_log")
     
-    if (mio.dbg):
+    if (mio.dbg == True):
         print("Call to do_sim(snapshot='" + snapshot + "', test_name='" + test_name + "', seed='" + str(seed) + "', args='" + act_args + "')")
     
     print("\033[0;32m**********")
     print("Simulating")
     print("**********\033[0m")
     
-    if (mio.sim_waves):
+    if (cfg['sim_waves'] == True):
         if not os.path.exists(tests_results_path + "/run.xsim.tcl"):
             f = open(tests_results_path + "/run.xsim.tcl", "w")
             f.write("log_wave -recursive *")
@@ -132,23 +133,24 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     else:
         waves_str = ""
     
-    if (mio.sim_cov):
+    if (cfg['sim_cov'] == True):
         cov_str = ""
     else: 
         cov_str = ""
     
-    if (mio.sim_gui):
+    if (cfg['sim_gui'] == True):
         gui_str = " --gui "
         runall_str = ""
+        waves_str = ""
     else:
         gui_str = ""
-        if (mio.sim_waves):
+        if (cfg['sim_waves'] == True):
             runall_str = ""
         else:
             runall_str = " --runall --onerror quit"
     
-    if (mio.sim_cov):
-        cov_str = " -cov_db_name " + name + "_" + seed + " -cov_db_dir " + tests_results_path + "/cov"
+    if (cfg['sim_cov'] == True):
+        cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
     else: 
         cov_str = " -ignore_coverage "
     
@@ -165,6 +167,6 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     print("* View simulation results")
     print("************************************************************************************************************************")
     print("Open log file: emacs ./results/" + test_name + "_" + str(seed) + "/sim.log &")
-    if (mio.sim_waves):
+    if (cfg['sim_waves'] == True):
         print("View waves: " + mio.vivado_path + "xsim -gui ./results/" + test_name + "_" + str(seed) + "/waves.wdb &")
     print("************************************************************************************************************************")

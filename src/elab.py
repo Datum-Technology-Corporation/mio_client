@@ -37,7 +37,7 @@ def add_elab_to_history_log(snapshot, elaboration_log_path):
 
 
 
-def elab(ip_name):
+def elab(cfg, ip_name):
     with open(mio.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
@@ -53,17 +53,17 @@ def elab(ip_name):
                                 rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
                                 xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
                                 top_rtl_constructs = rtl_yaml['hdl-src']['top-constructs']
-                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
+                                do_dut_vivado_elab(cfg, ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
                             else:
                                 print("Elaboration of non-Vivado RTL Project DUTs is not yet supported")
             else:
                 top_hdl_unit = dv_yaml['hdl-src']['top-constructs'][0]
-                do_elab(ip_name, top_hdl_unit)
+                do_elab(cfg, ip_name, top_hdl_unit)
 
 
 
 
-def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs):
+def do_dut_vivado_elab(cfg, ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs):
     elaboration_log_path = mio.pwd + "/results/" + lib_name + ".elab.log"
     lib_string = ""
     top_rtl_constructs_string = ""
@@ -78,7 +78,7 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
 
 
 
-def do_elab(lib_name, design_unit):
+def do_elab(cfg, lib_name, design_unit):
     
     debug_str = ""
 

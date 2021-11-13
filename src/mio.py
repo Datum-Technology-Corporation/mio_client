@@ -73,11 +73,12 @@ import re
 
 
 dbg             = False
-sim_debug       = True#False
+sim_debug       = False
 sim_gui         = False
-sim_waves       = True
+sim_waves       = False
 sim_cov         = False
 glb_args = {}
+glb_cfg = {}
 
 pwd               = os.getcwd()
 temp_path         = pwd + '/temp'
@@ -97,6 +98,8 @@ def do_dispatch(args):
     global sim_waves
     global sim_cov
     global glb_args
+    global glb_cfg
+    
     glb_args = args
     
     if (dbg):
@@ -127,21 +130,21 @@ def do_dispatch(args):
         args['sim'  ] = False
     
     if (args['-w'] or args['--waves']):
-        sim_waves = True
-        sim_debug = True
+        glb_cfg['sim_waves'] = True
+        glb_cfg['sim_debug'] = True
     else:
-        sim_waves = False
+        glb_cfg['sim_waves'] = False
     
     if (args['-c'] or args['--cov']):
-        sim_cov = True
+        glb_cfg['sim_cov'] = True
     else:
-        sim_cov= False
+        glb_cfg['sim_cov'] = False
     
     if (args['-g'] or args['--gui']):
-        sim_debug = True
-        sim_gui   = True
+        glb_cfg['sim_debug'] = True
+        glb_cfg['sim_gui'] = True
     else:
-        sim_gui   = False
+        glb_cfg['sim_gui'] = False
     
     if args['<args>'] == None:
         final_args = []
@@ -154,12 +157,12 @@ def do_dispatch(args):
         out_path = pwd + "/out"
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        cmp.cmp_rtl(args['<target>'])
-        cmp.cmp_dv (args['<target>'])
+        cmp.cmp_rtl(glb_cfg, args['<target>'])
+        cmp.cmp_dv (glb_cfg, args['<target>'])
     if args['elab']:
-        elab.elab(args['<target>'])
+        elab.elab(glb_cfg, args['<target>'])
     if args['sim']:
-        sim.sim(args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], final_args)
+        sim.sim(glb_cfg, args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], final_args)
     if args['results']:
         results.do_parse_results(args['<target>'], args['<filename>'])
     if args['cov']:

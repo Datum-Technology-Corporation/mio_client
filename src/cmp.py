@@ -45,7 +45,7 @@ def do_cmp_rtl(target_design):
 
 
 
-def cmp_rtl(ip_name):
+def cmp_rtl(cfg, ip_name):
     with open(mio.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
@@ -75,17 +75,17 @@ def cmp_rtl(ip_name):
 
 
 
-def cmp_dv(ip_name):
+def cmp_dv(cfg, ip_name):
     with open(mio.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
             filelist_path = mio.dv_path + "/" + ip_name + "/" + dv_yaml['hdl-src']['flists']['vivado'][0]
-        do_cmp_dv(filelist_path, ip_name)
+        do_cmp_dv(cfg, filelist_path, ip_name)
 
 
 
 
-def do_cmp_dv(filelist_path, lib_name):
+def do_cmp_dv(cfg, filelist_path, lib_name):
     if (mio.dbg):
         print("Call to do_cmp_dv(filelist_path='" + filelist_path + "', lib_name='" + lib_name + "')")
     print("\033[0;36m************")
