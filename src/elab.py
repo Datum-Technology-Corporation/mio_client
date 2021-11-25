@@ -93,8 +93,11 @@ def do_elab(cfg, lib_name, design_unit):
     else:
         debug_str = " --debug typical "
     
-    if (mio.sim_cov):
-        cov_str = " -cov_db_name " + design_unit + " -cov_db_dir " + pwd + "/results/cov"
+    if (cfg['sim_cov'] == True):
+        # TODO Move this to sim, not elaborate
+        # TODO Add code coverage
+        debug_str = " --debug all "
+        cov_str = " -cov_db_name " + lib_name + " -cov_db_dir cov"
     else: 
         cov_str = " -ignore_coverage "
 

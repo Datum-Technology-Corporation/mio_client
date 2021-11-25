@@ -61,6 +61,11 @@ class uvme_mio_cli_st_env_c extends uvm_env;
    extern virtual function void connect_phase(uvm_phase phase);
    
    /**
+    * TODO Describe uvme_mio_cli_st_env_c::final_phase()
+    */
+   extern virtual function void final_phase(uvm_phase phase);
+   
+   /**
     * Assigns configuration handles to components using UVM Configuration Database.
     */
    extern function void assign_cfg();
@@ -107,11 +112,10 @@ function uvme_mio_cli_st_env_c::new(string name="uvme_mio_cli_st_env", uvm_compo
    
    super.new(name, parent);
    
-   // TODO Override agent/lib coverage model(s)
-   //      Ex: set_type_override_by_type(
-   //             uvma_mio_cli_cov_model_c   ::get_type(),
-   //             uvme_mio_cli_st_cov_model_c::get_type(),
-   //          );
+   set_type_override_by_type(
+      uvma_mio_cli_cov_model_c   ::get_type(),
+      uvme_mio_cli_st_cov_model_c::get_type(),
+   );
    
 endfunction : new
 
@@ -166,30 +170,39 @@ function void uvme_mio_cli_st_env_c::connect_phase(uvm_phase phase);
 endfunction: connect_phase
 
 
+function void uvme_mio_cli_st_env_c::final_phase(uvm_phase phase);
+   
+   super.final_phase(phase);
+   `uvm_info("MIO_CLI_ST_ENV", "Sampling cfg coverage", UVM_LOW)
+   cntxt.sample_cfg_e.trigger();
+   
+endfunction : final_phase
+
+
 function void uvme_mio_cli_st_env_c::assign_cfg();
    
-   uvm_config_db#(uvme_mio_cli_st_cfg_c)::set(this, "*", "cfg", cfg);
-   uvm_config_db#(uvma_mio_cli_cfg_c   )::set(this, "bob_agent", "cfg", cfg.bob_cfg);
+   uvm_config_db#(uvme_mio_cli_st_cfg_c)::set(this, "*"          , "cfg", cfg          );
    uvm_config_db#(uvma_mio_cli_cfg_c   )::set(this, "alice_agent", "cfg", cfg.alice_cfg);
-   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb", "cfg", cfg.sb_cfg);
+   uvm_config_db#(uvma_mio_cli_cfg_c   )::set(this, "bob_agent"  , "cfg", cfg.bob_cfg  );
+   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb"         , "cfg", cfg.sb_cfg   );
    
 endfunction: assign_cfg
 
 
 function void uvme_mio_cli_st_env_c::assign_cntxt();
    
-   uvm_config_db#(uvme_mio_cli_st_cntxt_c)::set(this, "*", "cntxt", cntxt);
-   uvm_config_db#(uvma_mio_cli_cntxt_c   )::set(this, "bob_agent", "cntxt", cntxt.bob_cntxt);
+   uvm_config_db#(uvme_mio_cli_st_cntxt_c)::set(this, "*"          , "cntxt", cntxt            );
    uvm_config_db#(uvma_mio_cli_cntxt_c   )::set(this, "alice_agent", "cntxt", cntxt.alice_cntxt);
-   uvm_config_db#(uvml_sb_simplex_cntxt_c)::set(this, "sb", "cntxt", cntxt.sb_cntxt);
+   uvm_config_db#(uvma_mio_cli_cntxt_c   )::set(this, "bob_agent"  , "cntxt", cntxt.bob_cntxt  );
+   uvm_config_db#(uvml_sb_simplex_cntxt_c)::set(this, "sb"         , "cntxt", cntxt.sb_cntxt   );
    
 endfunction: assign_cntxt
 
 
 function void uvme_mio_cli_st_env_c::create_agents();
    
-   bob_agent = uvma_mio_cli_agent_c::type_id::create("bob_agent", this);
    alice_agent = uvma_mio_cli_agent_c::type_id::create("alice_agent", this);
+   bob_agent   = uvma_mio_cli_agent_c::type_id::create("bob_agent"  , this);
    
 endfunction: create_agents
 
@@ -197,8 +210,8 @@ endfunction: create_agents
 function void uvme_mio_cli_st_env_c::create_env_components();
    
    if (cfg.scoreboarding_enabled) begin
-      predictor = uvme_mio_cli_st_prd_c::type_id::create("predictor", this);
-      sb = uvme_mio_cli_st_sb_simplex_c::type_id::create("sb", this);
+      predictor = uvme_mio_cli_st_prd_c      ::type_id::create("predictor", this);
+      sb       = uvme_mio_cli_st_sb_simplex_c::type_id::create("sb"       , this);
    end
    
 endfunction: create_env_components
@@ -232,8 +245,8 @@ endfunction: connect_scoreboard
 
 function void uvme_mio_cli_st_env_c::assemble_vsequencer();
    
-   vsequencer.bob_sequencer = bob_agent.sequencer;
    vsequencer.alice_sequencer = alice_agent.sequencer;
+   vsequencer.bob_sequencer   = bob_agent  .sequencer;
    
 endfunction: assemble_vsequencer
 

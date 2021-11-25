@@ -24,9 +24,10 @@ class uvme_mio_cli_st_cov_model_c extends uvma_mio_cli_cov_model_c;
    
    
    covergroup mio_cli_st_cfg_cg;
-      // TODO Implement mio_cli_st_cfg_cg
-      //      Ex: abc_cpt : coverpoint cfg.abc;
-      //          xyz_cpt : coverpoint cfg.xyz;
+      enabled_cpt      : coverpoint cfg.enabled     ;
+      is_active_cpt    : coverpoint cfg.is_active   ;
+      reset_type_cpt   : coverpoint cfg.reset_type  ;
+      sqr_arb_mode_cpt : coverpoint cfg.sqr_arb_mode;
    endgroup : mio_cli_st_cfg_cg
    
    covergroup mio_cli_st_cntxt_cg;

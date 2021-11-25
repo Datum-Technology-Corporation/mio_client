@@ -19,22 +19,23 @@ from datetime import datetime
 
 def gen_cov_report(sim_lib):
     print("Generating coverage report for " + sim_lib)
-    dir_string = ""
-    now = datetime.now()
-    timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
-    print("Parsing results ...")
-    if not os.path.exists(mio.history_file_path):
-        sys.exit("No history log file")
-    else:
-        with open(mio.history_file_path,'r') as yamlfile:
-            cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-            if cur_yaml:
-                for sim in cur_yaml[sim_lib]['simulations']:
-                    cov_path = sim + "/cov/xsim.covdb"
-                    if cur_yaml[sim_lib]['simulations'][sim]['cov']:
-                        dir_string = dir_string + " -dir " + cov_path
+    # TODO Bring back coverage merge once it is done per sim
+    #dir_string = ""
+    #now = datetime.now()
+    #timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
+    #print("Parsing results ...")
+    #if not os.path.exists(mio.history_file_path):
+    #    sys.exit("No history log file")
+    #else:
+    #    with open(mio.history_file_path,'r') as yamlfile:
+    #        cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
+    #        if cur_yaml:
+    #            for sim in cur_yaml[sim_lib]['simulations']:
+    #                cov_path = sim + "/cov/xsim.covdb"
+    #                if cur_yaml[sim_lib]['simulations'][sim]['cov']:
+    #                    dir_string = dir_string + " -dir " + cov_path
     
-    if not os.path.exists(pwd + "/cov_report"):
-        os.mkdir(pwd + "/cov_report")
-    mio.run_xsim_bin("xcrg", dir_string + " -report_format all -report_dir " + mio.pwd + "/cov_report/" + sim_lib)
+    if not os.path.exists(mio.pwd + "/cov_report"):
+        os.mkdir(mio.pwd + "/cov_report")
+    mio.run_xsim_bin("xcrg", "-report_format text -report_dir . -db_name " + sim_lib + " -dir cov")
 

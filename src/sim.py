@@ -150,7 +150,8 @@ def do_sim(cfg, lib_name, name, seed, verbosity, plus_args):
             runall_str = " --runall --onerror quit"
     
     if (cfg['sim_cov'] == True):
-        cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
+        #cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
+        cov_str = ""
     else: 
         cov_str = " -ignore_coverage "
     
