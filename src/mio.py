@@ -136,6 +136,7 @@ def do_dispatch(args):
         glb_cfg['sim_waves'] = False
     
     if (args['-c'] or args['--cov']):
+        glb_cfg['sim_debug'] = True
         glb_cfg['sim_cov'] = True
     else:
         glb_cfg['sim_cov'] = False
@@ -166,7 +167,7 @@ def do_dispatch(args):
     if args['results']:
         results.do_parse_results(args['<target>'], args['<filename>'])
     if args['cov']:
-        cov.gen_cov_report(args['<target>'])
+        cov.gen_cov_report(glb_cfg, args['<target>'])
     if args['dox']:
         dox.gen_doxygen(args['<name>'], args['<target>'])
 

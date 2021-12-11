@@ -24,8 +24,8 @@ class uvme_mio_cli_st_env_c extends uvm_env;
    uvme_mio_cli_st_cntxt_c  cntxt;
    
    // Agents
-   uvma_mio_cli_agent_c    bob_agent;
    uvma_mio_cli_agent_c  alice_agent;
+   uvma_mio_cli_agent_c    bob_agent;
    
    // Components
    uvme_mio_cli_st_prd_c         predictor;
@@ -59,11 +59,6 @@ class uvme_mio_cli_st_env_c extends uvm_env;
     * 4. Connects agents to coverage model via connect_coverage_model()
     */
    extern virtual function void connect_phase(uvm_phase phase);
-   
-   /**
-    * TODO Describe uvme_mio_cli_st_env_c::final_phase()
-    */
-   extern virtual function void final_phase(uvm_phase phase);
    
    /**
     * Assigns configuration handles to components using UVM Configuration Database.
@@ -165,18 +160,12 @@ function void uvme_mio_cli_st_env_c::connect_phase(uvm_phase phase);
       if (cfg.is_active) begin
          assemble_vsequencer();
       end
+      
+      alice_agent.cov_model.sample_cfg();
+      bob_agent  .cov_model.sample_cfg();
    end
    
 endfunction: connect_phase
-
-
-function void uvme_mio_cli_st_env_c::final_phase(uvm_phase phase);
-   
-   super.final_phase(phase);
-   `uvm_info("MIO_CLI_ST_ENV", "Sampling cfg coverage", UVM_LOW)
-   cntxt.sample_cfg_e.trigger();
-   
-endfunction : final_phase
 
 
 function void uvme_mio_cli_st_env_c::assign_cfg();

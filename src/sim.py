@@ -19,7 +19,7 @@ import yaml
 from yaml.loader import SafeLoader
 
 
-def add_sim_to_history_log(snapshot, test_name, seed, args, results_path):
+def add_sim_to_history_log(cfg, snapshot, test_name, seed, args, results_path):
     now = datetime.now()
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
     
@@ -43,15 +43,15 @@ def add_sim_to_history_log(snapshot, test_name, seed, args, results_path):
             cur_yaml[snapshot]['simulations'][results_path]['args'] = args
             cur_yaml[snapshot]['simulations'][results_path]['results'] = results_path
             cur_yaml[snapshot]['simulations'][results_path]['start'] = timestamp
-            cur_yaml[snapshot]['simulations'][results_path]['cov'] = mio.sim_cov
-            cur_yaml[snapshot]['simulations'][results_path]['waves'] = mio.sim_waves
+            cur_yaml[snapshot]['simulations'][results_path]['cov'] = cfg['sim_cov']
+            cur_yaml[snapshot]['simulations'][results_path]['waves'] = cfg['sim_waves']
             with open(mio.history_file_path,'w') as yamlfile:
                 yaml.dump(cur_yaml, yamlfile) # Also note the safe_dump
 
 
 
 
-def update_sim_timestamp_in_history_log(snapshot, orig_timestamp, tests_results_path):
+def update_sim_timestamp_in_history_log(cfg, snapshot, orig_timestamp, tests_results_path):
     now = datetime.now()
     duration = now - orig_timestamp
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
@@ -133,11 +133,6 @@ def do_sim(cfg, lib_name, name, seed, verbosity, plus_args):
     else:
         waves_str = ""
     
-    if (cfg['sim_cov'] == True):
-        cov_str = ""
-    else: 
-        cov_str = ""
-    
     if (cfg['sim_gui'] == True):
         gui_str = " --gui "
         runall_str = ""
@@ -150,15 +145,16 @@ def do_sim(cfg, lib_name, name, seed, verbosity, plus_args):
             runall_str = " --runall --onerror quit"
     
     if (cfg['sim_cov'] == True):
-        #cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
-        cov_str = ""
+        if not os.path.exists(tests_results_path + "/cov"):
+            os.mkdir(tests_results_path + "/cov")
+        cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
     else: 
         cov_str = " -ignore_coverage "
     
-    add_sim_to_history_log(lib_name, name, seed, orig_plus_args, tests_results_path)
+    add_sim_to_history_log(cfg, lib_name, name, seed, orig_plus_args, tests_results_path)
     now = datetime.now()
     mio.run_xsim_bin("xsim", snapshot + gui_str + waves_str + cov_str + runall_str + " " + act_args + " --stats --log " + tests_results_path + "/sim.log")
-    update_sim_timestamp_in_history_log(lib_name, now, tests_results_path)
+    update_sim_timestamp_in_history_log(cfg, lib_name, now, tests_results_path)
     print("************************************************************************************************************************")
     print("* View compilation/elaboration results")
     print("************************************************************************************************************************")

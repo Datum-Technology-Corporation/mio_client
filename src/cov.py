@@ -14,28 +14,41 @@
 
 import os
 import mio
+import yaml
+from yaml.loader import SafeLoader
 from datetime import datetime
 
 
-def gen_cov_report(sim_lib):
+#xcrg  -dir a1  -dir b1  -db_name d1  -db_name   d2  -merge_dir    m1   -merge_db_name   n1 -log result.txt  -report_format   html  -report_dir    report1
+def gen_cov_report(cfg, sim_lib):
     print("Generating coverage report for " + sim_lib)
     # TODO Bring back coverage merge once it is done per sim
-    #dir_string = ""
-    #now = datetime.now()
-    #timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
-    #print("Parsing results ...")
-    #if not os.path.exists(mio.history_file_path):
-    #    sys.exit("No history log file")
-    #else:
-    #    with open(mio.history_file_path,'r') as yamlfile:
-    #        cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-    #        if cur_yaml:
-    #            for sim in cur_yaml[sim_lib]['simulations']:
-    #                cov_path = sim + "/cov/xsim.covdb"
-    #                if cur_yaml[sim_lib]['simulations'][sim]['cov']:
-    #                    dir_string = dir_string + " -dir " + cov_path
+    dir_string = ""
+    db_name_string = ""
+    merge_string = "-merge_dir " + mio.pwd + "/cov/merge" + " -merge_db_name " + sim_lib
+    now = datetime.now()
+    timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
+    print("Parsing results ...")
+    if not os.path.exists(mio.history_file_path):
+        sys.exit("No history log file")
+    else:
+        with open(mio.history_file_path,'r') as yamlfile:
+            cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
+            if not cur_yaml:
+                sys.exit("Failed to open history log file")
+            else:
+                if not 'simulations' in cur_yaml[sim_lib]:
+                    sys.exit("No record of simulations for " + sim_lib)
+                else:
+                    for sim in cur_yaml[sim_lib]['simulations']:
+                        cov_path = sim + "/cov"
+                        if cur_yaml[sim_lib]['simulations'][sim]['cov']:
+                            dir_string     = dir_string + " -dir " + cov_path
+                            db_name_string = db_name_string + " -db_name " + cur_yaml[sim_lib]['simulations'][sim]['test_name'] + "_" + cur_yaml[sim_lib]['simulations'][sim]['seed']
     
-    if not os.path.exists(mio.pwd + "/cov_report"):
-        os.mkdir(mio.pwd + "/cov_report")
-    mio.run_xsim_bin("xcrg", "-report_format text -report_dir . -db_name " + sim_lib + " -dir cov")
+    if not os.path.exists(mio.pwd + "/cov"):
+        os.mkdir(mio.pwd + "/cov")
+    if not os.path.exists(mio.pwd + "/cov/reports"):
+        os.mkdir(mio.pwd + "/cov/reports")
+    mio.run_xsim_bin("xcrg", dir_string + " " + db_name_string + " " + merge_string + " -report_format text -report_dir " + mio.pwd + "/cov/reports/" + sim_lib)
 

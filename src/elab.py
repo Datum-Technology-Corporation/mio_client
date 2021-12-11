@@ -97,7 +97,7 @@ def do_elab(cfg, lib_name, design_unit):
         # TODO Move this to sim, not elaborate
         # TODO Add code coverage
         debug_str = " --debug all "
-        cov_str = " -cov_db_name " + lib_name + " -cov_db_dir cov"
+        cov_str = " "
     else: 
         cov_str = " -ignore_coverage "
 

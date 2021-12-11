@@ -90,6 +90,7 @@ endfunction : new
 
 function void uvme_mio_cli_st_cov_model_c::sample_cfg();
    
+   `uvm_info("MIO_CLI_ST_ENV", "Sampling cfg coverage", UVM_LOW)
    mio_cli_st_cfg_cg.sample();
    
 endfunction : sample_cfg

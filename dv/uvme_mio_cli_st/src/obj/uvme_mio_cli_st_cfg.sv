@@ -27,9 +27,9 @@ class uvme_mio_cli_st_cfg_c extends uvm_object;
    rand bit                      trn_log_enabled      ;
    
    // Objects
-   rand uvma_mio_cli_cfg_c  bob_cfg;
-   rand uvma_mio_cli_cfg_c  alice_cfg;
-   rand uvml_sb_simplex_cfg_c  sb_cfg;
+   rand uvma_mio_cli_cfg_c     alice_cfg;
+   rand uvma_mio_cli_cfg_c     bob_cfg  ;
+   rand uvml_sb_simplex_cfg_c  sb_cfg   ;
    
    
    `uvm_object_utils_begin(uvme_mio_cli_st_cfg_c)
@@ -39,9 +39,9 @@ class uvme_mio_cli_st_cfg_c extends uvm_object;
       `uvm_field_int (                         cov_model_enabled    , UVM_DEFAULT)
       `uvm_field_int (                         trn_log_enabled      , UVM_DEFAULT)
       
-      `uvm_field_object(bob_cfg, UVM_DEFAULT)
       `uvm_field_object(alice_cfg, UVM_DEFAULT)
-      `uvm_field_object(sb_cfg       , UVM_DEFAULT)
+      `uvm_field_object(bob_cfg  , UVM_DEFAULT)
+      `uvm_field_object(sb_cfg   , UVM_DEFAULT)
    `uvm_object_utils_end
    
    

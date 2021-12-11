@@ -48,9 +48,7 @@ package uvmt_mio_cli_st_pkg;
    // Base test
    `include "uvmt_mio_cli_st_test_cfg.sv"
    `include "uvmt_mio_cli_st_base_test.sv"
-   
-   // TODO Add tests
-   //      Ex: `include "uvmt_mio_cli_st_sanity_test.sv"
+   `include "uvmt_mio_cli_st_smoke_test.sv"
    
 endpackage : uvmt_mio_cli_st_pkg
 
