@@ -46,31 +46,59 @@ def do_cmp_rtl(target_design):
 
 
 def cmp_rtl(cfg, ip_name):
+    ip_dir = ""
+    ip_type = ""
+    ip_file_path = ""
+    
     with open(mio.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
             if 'dut-ip' in dv_yaml['hdl-src']:
                 rtl_ip_name = dv_yaml['hdl-src']['dut-ip']
-                with open(mio.rtl_path + "/" + rtl_ip_name + "/ip.yml", 'r') as yamlfile:
-                    rtl_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-                    if rtl_yaml:
-                        rtl_sub_type = rtl_yaml['ip']['sub-type'].lower().strip()
-                        if (rtl_sub_type == "vivado"):
-                            rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
-                            xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
-                            vlog_prj_file_path = rtl_yaml['hdl-src']['vlog']
-                            vhdl_prj_file_path = rtl_yaml['hdl-src']['vhdl']
-                            vlog_compilation_log_path = mio.pwd + "/results/" + rtl_ip_name + ".vlog.cmp.log"
-                            vhdl_compilation_log_path = mio.pwd + "/results/" + rtl_ip_name + ".vhdl.cmp.log"
-                            print("\033[1;35m*************")
-                            print("Compiling RTL")
-                            print("*************\033[0m")
-                            mio.run_xsim_bin("xvlog", " --relax -prj " + mio.rtl_path + "/" + rtl_ip_name + "/" + vlog_prj_file_path + " --log " + vlog_compilation_log_path)
-                            mio.run_xsim_bin("xvhdl", " --relax -prj " + mio.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " --log " + vhdl_compilation_log_path)
-                            add_cmp_to_history_log(rtl_lib_name + ".vlog", vlog_compilation_log_path)
-                            add_cmp_to_history_log(rtl_lib_name + ".vhdl", vhdl_compilation_log_path)
-                        else:
-                            print("Compilation of non-vivado RTL projects is not yet supported")
+                
+                if os.path.exists(mio.rtl_path + "/" + rtl_ip_name): # Search for IP in RTL dir
+                    ip_dir = mio.rtl_path + "/" + rtl_ip_name
+                elif os.path.exists(mio.rtl_path + "/.imports/" + rtl_ip_name): # If not found, look in .imports dir
+                    ip_dir = mio.rtl_path + "/.imports/" + rtl_ip_name
+                else:
+                    print("ERROR: Could not find DUT IP " + rtl_ip_name)
+                
+                if os.path.exists(ip_dir + "/ip.yml"): # Look for ip.yml
+                    ip_type = "mio"
+                    ip_file_path = ip_dir + "/ip.yml"
+                elif os.path.exists(ip_dir + "/" + rtl_ip_name + ".core"): # If not found, look for <ip_name>.core
+                    ip_file_path = ip_dir + "/" + rtl_ip_name + ".core"
+                    ip_type = "fsoc"
+                else:
+                    print("ERROR: Could not find DUT IP " + rtl_ip_name)
+                
+                if ip_type == "mio":
+                    with open(ip_file_path, 'r') as yamlfile:
+                        rtl_yaml = yaml.load(yamlfile, Loader=SafeLoader)
+                        if rtl_yaml:
+                            rtl_sub_type = rtl_yaml['ip']['sub-type'].lower().strip()
+                            if (rtl_sub_type == "vivado"):
+                                rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
+                                xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
+                                vlog_prj_file_path = rtl_yaml['hdl-src']['vlog']
+                                vhdl_prj_file_path = rtl_yaml['hdl-src']['vhdl']
+                                vlog_compilation_log_path = mio.pwd + "/results/" + rtl_ip_name + ".vlog.cmp.log"
+                                vhdl_compilation_log_path = mio.pwd + "/results/" + rtl_ip_name + ".vhdl.cmp.log"
+                                print("\033[1;35m*************")
+                                print("Compiling RTL")
+                                print("*************\033[0m")
+                                mio.run_xsim_bin("xvlog", " --relax -prj " + mio.rtl_path + "/" + rtl_ip_name + "/" + vlog_prj_file_path + " --log " + vlog_compilation_log_path)
+                                mio.run_xsim_bin("xvhdl", " --relax -prj " + mio.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " --log " + vhdl_compilation_log_path)
+                                add_cmp_to_history_log(rtl_lib_name + ".vlog", vlog_compilation_log_path)
+                                add_cmp_to_history_log(rtl_lib_name + ".vhdl", vhdl_compilation_log_path)
+                            else:
+                                print("ERROR: Compilation of non-vivado RTL projects is not yet supported")
+                
+                if ip_type == "fsoc":
+                    print("ERROR: Compilation of FuseSoC projects is not yet supported")
+                    
+                if ip_type == "":
+                    print("ERROR: Could not find DUT IP " + rtl_ip_name)
 
 
 
