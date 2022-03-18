@@ -25,8 +25,8 @@ export PROJECT_SIM_RESULTS_DIR=${PROJECT_SIM_DIR}/results
 ### Tools ###
 # Local
 # Imports
-export MIO_HOME=${PROJECT_ROOT_DIR}
-alias mio="${MIO_HOME}/src/mio.py"
+export MIO_HOME=${PROJECT_ROOT_DIR}/../../mio
+alias mio="${MIO_HOME}/__main__.py"
 
 
 ### RTL ###
