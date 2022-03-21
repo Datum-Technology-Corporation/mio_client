@@ -5,6 +5,7 @@
 
 
 import cfg
+import clean
 import cmp
 import cov
 import dox
@@ -12,24 +13,14 @@ import elab
 import history
 import results
 import sim
-import vivado
+import utilities
 
-import shutil
-import os
+import subprocess
 
 
-def do_clean():
+def run_bin(name, args):
+    bin_path = cfg.vivado_path + name
     if (cfg.dbg):
-        print("Call to do_clean()")
-    print("\033[1;31m********")
-    print("Cleaning")
-    print("********\033[0m")
-    if os.path.exists("./xsim.dir"):
-        shutil.rmtree("./xsim.dir")
-    if os.path.exists("./out"):
-        shutil.rmtree("./out")
-    if os.path.exists(cfg.history_file_path):
-        os.remove(cfg.history_file_path)
-    history.create_history_log()
-
-
+        print("Call to run_xsim_bin(name='" + name + "', args='"  + args + "')")
+        print("System call is " + bin_path + " " + args)
+    subprocess.call(bin_path + " " + args, shell=True)

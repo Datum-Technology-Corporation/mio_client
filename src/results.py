@@ -1,20 +1,21 @@
-#! /usr/bin/python3 
+# Copyright Datum Technology Corporation
 ########################################################################################################################
-## Copyright 2021 Datum Technology Corporation
-########################################################################################################################
-## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
-## Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
-## with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
-##                                        https://solderpad.org/licenses/SHL-2.1/
-## Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
-## an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
-## specific language governing permissions and limitations under the License.
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
+
+import cfg
+import clean
+import cmp
+import cov
+import dox
+import elab
+import history
+import sim
+import vivado
 
 import yaml
 from yaml.loader import SafeLoader
-import mio
 import os
 import jinja2
 from jinja2 import Template
@@ -112,10 +113,10 @@ def do_parse_results(snapshot, filename):
     results_model['testsuites']['suites'].append(suite_model)
     
     print("Parsing results ...")
-    if not os.path.exists(mio.history_file_path):
+    if not os.path.exists(cfg.history_file_path):
         sys.exit("No history log file")
     else:
-        with open(mio.history_file_path,'r') as yamlfile:
+        with open(cfg.history_file_path,'r') as yamlfile:
             cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
             if cur_yaml:
                 for sim in cur_yaml[snapshot]['simulations']:
@@ -184,7 +185,7 @@ def sim_parse_sim_results(sim_log_path, testcase, testcase_model):
     num_warnings=0
     num_errors = 0
     num_fatals=0
-    if not os.path.exists(mio.history_file_path):
+    if not os.path.exists(cfg.history_file_path):
         print("No sim log file " + sim_log_path)
         test_result = "inconclusive"
     else:

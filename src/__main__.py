@@ -55,13 +55,18 @@ Examples:
 """
 
 
+import cfg
 import clean
 import cmp
 import cov
 import dox
 import elab
+import history
 import results
 import sim
+import utilities
+import vivado
+
 from docopt     import docopt
 import os
 import subprocess
@@ -72,37 +77,12 @@ from yaml.loader import SafeLoader
 import re
 
 
-dbg             = False
-sim_debug       = False
-sim_gui         = False
-sim_waves       = False
-sim_cov         = False
-glb_args = {}
-glb_cfg = {}
-
-pwd               = os.getcwd()
-temp_path         = pwd + '/temp'
-vivado_path       = os.getenv("VIVADO", '/tools/vivado/2021.1/Vivado/2021.1/bin/')
-uvm_dpi_so        = "uvm_dpi"
-project_dir       = pwd + "/.."
-rtl_path          = project_dir + "/rtl"
-rtl_libs_path     = rtl_path + "/.imports"
-dv_path           = project_dir + "/dv"
-dv_imports_path   = dv_path + "/.imports"
-history_file_path = pwd + "/history.yaml"
 
 
 def do_dispatch(args):
-    global sim_debug
-    global sim_gui
-    global sim_waves
-    global sim_cov
-    global glb_args
-    global glb_cfg
+    cfg.glb_args = args
     
-    glb_args = args
-    
-    if (dbg):
+    if (cfg.dbg):
         print("Call to do_dispatch()")
     
     if not args['<seed>']:
@@ -130,22 +110,22 @@ def do_dispatch(args):
         args['sim'  ] = False
     
     if (args['-w'] or args['--waves']):
-        glb_cfg['sim_waves'] = True
-        glb_cfg['sim_debug'] = True
+        cfg.glb_cfg['sim_waves'] = True
+        cfg.glb_cfg['sim_debug'] = True
     else:
-        glb_cfg['sim_waves'] = False
+        cfg.glb_cfg['sim_waves'] = False
     
     if (args['-c'] or args['--cov']):
-        glb_cfg['sim_debug'] = True
-        glb_cfg['sim_cov'] = True
+        cfg.glb_cfg['sim_debug'] = True
+        cfg.glb_cfg['sim_cov'] = True
     else:
-        glb_cfg['sim_cov'] = False
+        cfg.glb_cfg['sim_cov'] = False
     
     if (args['-g'] or args['--gui']):
-        glb_cfg['sim_debug'] = True
-        glb_cfg['sim_gui'] = True
+        cfg.glb_cfg['sim_debug'] = True
+        cfg.glb_cfg['sim_gui'] = True
     else:
-        glb_cfg['sim_gui'] = False
+        cfg.glb_cfg['sim_gui'] = False
     
     if args['<args>'] == None:
         final_args = []
@@ -155,56 +135,26 @@ def do_dispatch(args):
     if args['clean']:
         clean.do_clean()
     if args['cmp']:
-        out_path = pwd + "/out"
+        out_path = cfg.pwd + "/out"
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        cmp.cmp_rtl(glb_cfg, args['<target>'])
-        cmp.cmp_dv (glb_cfg, args['<target>'])
+        cmp.cmp_rtl(args['<target>'])
+        cmp.cmp_dv (args['<target>'])
     if args['elab']:
-        elab.elab(glb_cfg, args['<target>'])
+        elab.elab(args['<target>'])
     if args['sim']:
-        sim.sim(glb_cfg, args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], final_args)
+        sim.sim(args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], final_args)
     if args['results']:
         results.do_parse_results(args['<target>'], args['<filename>'])
     if args['cov']:
-        cov.gen_cov_report(glb_cfg, args['<target>'])
+        cov.gen_cov_report(args['<target>'])
     if args['dox']:
         dox.gen_doxygen(args['<name>'], args['<target>'])
 
 
-def set_env_var(name, value):
-    if (dbg):
-        print("Setting env var '" + name + "' to value '" + value + "'")
-    os.environ[name] = value
-
-
-def create_history_log():
-    if not os.path.exists(history_file_path):
-        with open(history_file_path,'w') as yamlfile:
-            yaml.dump({}, yamlfile)
-
-
-def copy_tree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
-        else:
-            shutil.copy2(s, d)
-
-
-def run_xsim_bin(name, args):
-    bin_path = vivado_path + name
-    if (dbg):
-        print("Call to run_xsim_bin(name='" + name + "', args='"  + args + "')")
-        print("System call is " + bin_path + " " + args)
-    subprocess.call(bin_path + " " + args, shell=True)
-
-
 if __name__ == '__main__':
     args = docopt(__doc__, version='Moore.io Client Command Line Interface - v0.1')
-    if (dbg):
+    if (cfg.dbg):
         print(args)
     do_dispatch(args)
 
