@@ -43,10 +43,19 @@ def elab(ip_name):
     with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
-            if 'dut-ip' in dv_yaml['hdl-src']:
-                rtl_ip_name = dv_yaml['hdl-src']['dut-ip']
+            if 'dut' in dv_yaml:
+                rtl_ip_name = dv_yaml['dut']['name']
+                rtl_ip_type = dv_yaml['dut']['ip-type']
                 top_dv_constructs = dv_yaml['hdl-src']['top-constructs']
-                if (rtl_ip_name):
+                
+                if (rtl_ip_type == "mio"):
+                    if os.path.exists(cfg.rtl_path + "/" + rtl_ip_name): # Search for IP in RTL dir
+                        ip_dir = cfg.rtl_path + "/" + rtl_ip_name
+                    elif os.path.exists(cfg.rtl_path + "/.imports/" + rtl_ip_name): # If not found, look in .imports dir
+                        ip_dir = cfg.rtl_path + "/.imports/" + rtl_ip_name
+                    else:
+                        print("ERROR: Could not find DUT IP " + rtl_ip_name)
+                        return
                     with open(cfg.rtl_path + "/" + rtl_ip_name + "/ip.yml", 'r') as yamlfile:
                         rtl_yaml = yaml.load(yamlfile, Loader=SafeLoader)
                         if rtl_yaml:
@@ -58,14 +67,22 @@ def elab(ip_name):
                                 do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
                             else:
                                 print("Elaboration of non-Vivado RTL Project DUTs is not yet supported")
+                elif (rtl_ip_type == "fsoc"):
+                    top_hdl_unit = dv_yaml['hdl-src']['top-constructs']
+                    do_dut_fsoc_elab(ip_name, rtl_ip_name, top_hdl_unit)
+                else:
+                    return
             else:
-                top_hdl_unit = dv_yaml['hdl-src']['top-constructs'][0]
+                top_hdl_unit = dv_yaml['hdl-src']['top-constructs']
                 do_elab(ip_name, top_hdl_unit)
 
 
 
 
 def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs):
+    print("\033[0;36m***********")
+    print("Elaborating")
+    print("***********\033[0m")
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
     lib_string = ""
     top_rtl_constructs_string = ""
@@ -74,6 +91,18 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
     for lib in xilinx_libs:
         lib_string = lib_string + " -L " + lib
     vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
+    add_elab_to_history_log(ip_name, elaboration_log_path)
+    
+
+
+
+
+def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs):
+    print("\033[0;36m***********")
+    print("Elaborating")
+    print("***********\033[0m")
+    elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
+    vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
