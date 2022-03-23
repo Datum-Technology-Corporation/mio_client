@@ -154,6 +154,7 @@ def cmp_rtl(ip_name):
                                                     dirs.append(re.sub("../../../../rtl/.imports", cfg.rtl_libs_path, file['include_path']))
                                             else:
                                                 files.append(re.sub("../../../../rtl/.imports", cfg.rtl_libs_path, file['name']))
+                                    
                                     for param in eda_yaml['parameters']:
                                         if eda_yaml['parameters'][param]['datatype'] == 'bool':
                                             new_define = {};
@@ -166,6 +167,19 @@ def cmp_rtl(ip_name):
                                             defines.append(new_define)
                                         else:
                                             print("Support for non-bool FuseSoC parameters is not currently implemented")
+                                    
+                                    for option in eda_yaml['tool_options']['xsim']['xelab_options']:
+                                        if (re.match("--define", option)):
+                                            new_define = {};
+                                            matches = re.search("--define\s+(\w+)\s*(?:=\s*(\S+))?", option)
+                                            if matches:
+                                                new_define['name'] = matches.group(1)
+                                                if len(matches.groups()) > 2:
+                                                    new_define['value'] = matches.group(2)
+                                                else:
+                                                    new_define['boolean'] = True
+                                                defines.append(new_define)
+                                    
                                     flist_template = cfg.templateEnv.get_template("vivado.flist.j2")
                                     outputText = flist_template.render(defines=defines, files=files, dirs=dirs)
                                     vlog_flist_file_path = eda_file_dir + "/" + file_path_partial_name + "_0.flist"

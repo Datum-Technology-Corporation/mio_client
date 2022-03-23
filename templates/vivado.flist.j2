@@ -5,8 +5,7 @@
 
 // Defines{% for define in defines %}
 {% if define.boolean %}--define {{ define.name }}
-{% else %}--define {{ define.name }}={{ define.value }}
-{% endif %}{% endfor %}
+{% else %}--define {{ define.name }}={{ define.value }}{% endif %}{% endfor %}
 
 // Directories{% for dir in dirs %}
 -i {{ dir }}{% endfor %}

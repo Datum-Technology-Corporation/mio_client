@@ -14,6 +14,7 @@ import results
 import sim
 import vivado
 
+import re
 import yaml
 from yaml.loader import SafeLoader
 from datetime import datetime
@@ -66,10 +67,23 @@ def elab(ip_name):
                                 top_rtl_constructs = rtl_yaml['hdl-src']['top-constructs']
                                 do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
                             else:
-                                print("Elaboration of non-Vivado RTL Project DUTs is not yet supported")
+                                print("ERROR: Elaboration of non-Vivado RTL Project DUTs is not yet supported")
                 elif (rtl_ip_type == "fsoc"):
-                    top_hdl_unit = dv_yaml['hdl-src']['top-constructs']
-                    do_dut_fsoc_elab(ip_name, rtl_ip_name, top_hdl_unit)
+                    fsoc_fname  = dv_yaml['dut']['full-name']
+                    file_path_partial_name = re.sub(r':', '_', fsoc_fname)
+                    eda_file_dir = cfg.pwd + "/fsoc/" + rtl_ip_name + "/sim-xsim"
+                    eda_file_path = eda_file_dir + "/" + file_path_partial_name + "_0.eda.yml"
+                    
+                    if os.path.exists(eda_file_path):
+                        with open(eda_file_path, 'r') as edafile:
+                            eda_yaml = yaml.load(edafile, Loader=SafeLoader)
+                            if eda_yaml:
+                                elab_options = eda_yaml['tool_options']['xsim']['xelab_options']
+                                do_dut_fsoc_elab(ip_name, rtl_ip_name, top_dv_constructs)
+                            else:
+                                print("ERROR: Unable to parse " + edafile)
+                    else:
+                        print("ERROR: Could not find " + edafile)
                 else:
                     return
             else:
@@ -102,7 +116,7 @@ def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs):
     print("Elaborating")
     print("***********\033[0m")
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
-    vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
