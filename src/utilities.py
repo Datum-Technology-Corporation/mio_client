@@ -5,6 +5,7 @@
 
 
 import cfg
+import clean
 import cmp
 import cov
 import dox
@@ -14,22 +15,18 @@ import results
 import sim
 import vivado
 
-import shutil
-import os
 
-
-def do_clean():
+def set_env_var(name, value):
     if (cfg.dbg):
-        print("Call to do_clean()")
-    print("\033[1;31m********")
-    print("Cleaning")
-    print("********\033[0m")
-    if os.path.exists("./xsim.dir"):
-        shutil.rmtree("./xsim.dir")
-    if os.path.exists("./out"):
-        shutil.rmtree("./out")
-    if os.path.exists(cfg.history_file_path):
-        os.remove(cfg.history_file_path)
-    history.create_history_log()
+        print("Setting env var '" + name + "' to value '" + value + "'")
+    os.environ[name] = value
 
 
+def copy_tree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)

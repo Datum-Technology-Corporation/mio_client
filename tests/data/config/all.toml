@@ -1,0 +1,95 @@
+# Copyright 2021 Datum Technology Corporation
+########################################################################################################################
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+########################################################################################################################
+
+
+## README
+# This is a sample configuration file for the moore.io platform
+# Although it differs in its language, it serves the same purpose as npm's .npmrc files and follow the same hierarchy: https://docs.npmjs.com/cli/v6/configuring-npm/npmrc#files
+# This is essentially a data store used by various mio commands to determine their behavior
+
+
+[include]
+path = "/tools/mi"
+
+
+title = "UVM Clocking Agent Project Configuration"                                                       # Standard for toml files -- don't care from mio standpoint
+
+[project]                                                                                          ### Project information
+name = "uvma_clk"                                                                                   # Project name (aka "short name")
+tags = ["clocking"]                                                                                # Informal project name (optional)
+full-name = "UVM Clocking agent"                                                                   # Full project name
+readme-path = "./README.md"                                                                                   # Project description (optional)
+org-name = "Datum Technology Corporation"                                                          # Org name (optional)
+
+
+[eda]                                                                                              ### EDA tools
+	[[eda.simulator]]                                                                              # Simulator entry
+   name = "vivado"                                                                                  # names are from enum {synopsys, cadence, mentor, metrics, aldec, xilinx, verilator, custom}
+   version = "2020.2"                                                                             # Project semver
+   path = "/tools/xilinx/vivado_2020_2/"                                                          # Path to tool root dir, can include mio vars ( {{var}} ) or environment vars ( $VAR )
+   [[eda.simulator]]                                                                              # Simulator entry
+   name = "vcs"                                                                                  # names are from enum {synopsys, cadence, mentor, metrics, aldec, xilinx, verilator, custom}
+   version = "2022"                                                                             # Project semver
+   path = "/tools/synopsys/vcs/2022"                                                          # Path to tool root dir, can include mio vars ( {{var}} ) or environment vars ( $VAR )
+   [[eda.synthesizer]]
+   name = "vivado"
+   version = "2020.2
+   path = "/tools/xilinx/vivado_2020_2/"
+   
+
+
+
+[rtl]
+src-paths = ["./rtl"]
+dependencies-path = "/rtl/libs"
+
+
+[dv]
+src-paths = ["./dv"]
+project-dependencies-path = "/dv/libs"
+default-vip = ""
+
+
+[lint]
+path = "./lint"
+preferred-linters = {name = 'verilator' , version = '^' }
+
+
+[synthesis]
+path = "./syn"
+preferred-synthesizers = [ { name = 'vivado' , version = '^' } ]
+
+
+[simulation]
+results-path = "./sim/results"
+test-results-path = "{{ ip_name }}_{{% if target %}{{ target }}_{% endif %}{{ test_name }}_{{ seed }}{% if args%}_{{% for arg in args %}{{ arg }}{% endfor %}{% endif %}"
+local-output-path = "./sim/out/{{ ip_name }}/{{ target }}/{{ simulator }}"
+lib-output-path = "./sim/out/{{ ip_name }}/"
+elab-output-path = "./sim/out/{{ ip_name }}/"
+preferred-simulators = [ { name = "vivado", version = "latest" } ]
+artifacts-paths =  { name = 'vivado' , version = '^' } 
+
+
+[[version-control]]
+type = "git"
+url = "https://github.com/Datum-Technology-Corporation/mio_arm"
+user-name = "peon"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"
+
+
+[[scheduling]]
+type = "grid"
+hosts = ["grid1.datumint.com"]
+user-name = "peon"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"
+default-queue = "default"
+default-priority = "medium"
+
+
+[[ci]]
+type = "jenkins"
+url = "http://datumint.com/ci/jenkins/mio_arm"
+user-name = "admin"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"
