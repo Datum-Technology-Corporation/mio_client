@@ -100,11 +100,14 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
     lib_string = ""
     top_rtl_constructs_string = ""
+    top_dv_constructs_string = ""
     for construct in top_rtl_constructs:
         top_rtl_constructs_string = top_rtl_constructs_string + " " + construct
+    for construct in top_dv_constructs:
+        top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
     for lib in xilinx_libs:
         lib_string = lib_string + " -L " + lib
-    vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
@@ -112,26 +115,33 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
 
 
 def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs):
+    top_dv_constructs_string = ""
+    for construct in top_dv_constructs:
+        top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
-    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + ip_name + "." + top_dv_constructs[0] + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
 
 
 
-def do_elab(lib_name, design_unit):
+def do_elab(lib_name, top_dv_constructs):
     
     debug_str = ""
+    top_dv_constructs_string = ""
 
     if (cfg.dbg):
-        print("Call to do_elab(lib_name='" + lib_name + "', design_unit='" + design_unit + "')")
+        print("Call to do_elab(lib_name='" + lib_name + "', design_unit='" + top_dv_constructs[0] + "')")
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
+    
+    for construct in top_dv_constructs:
+        top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
     
     if (cfg.sim_debug):
         debug_str = " --debug all "
@@ -148,5 +158,5 @@ def do_elab(lib_name, design_unit):
 
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
     add_elab_to_history_log(lib_name, elaboration_log_path)
-    vivado.run_bin("xelab", lib_name + "." + design_unit + cov_str + debug_str + " --incr -relax --O0 -v 0 -s " + design_unit + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", top_dv_constructs_string + cov_str + debug_str + " --incr -relax --O0 -v 0 -s " + top_dv_constructs[0] + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log " + elaboration_log_path)
     

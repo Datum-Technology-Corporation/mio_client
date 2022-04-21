@@ -1,14 +1,7 @@
 #! /usr/bin/python3 
 ########################################################################################################################
 ## Copyright 2021 Datum Technology Corporation
-########################################################################################################################
 ## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
-## Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
-## with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
-##                                        https://solderpad.org/licenses/SHL-2.1/
-## Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
-## an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
-## specific language governing permissions and limitations under the License.
 ########################################################################################################################
 
 
@@ -27,15 +20,17 @@
                            https://github.com/Datum-Technology-Corporation/mio_cli/tree/main/mio/cli
 
 Usage:
-  mio all  <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
-  mio cmp  <target>
-  mio elab <target>  [-d | --debug]
-  mio cpel <target>
-  mio sim  <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-c | --cov] [-- <args>]
+  mio install <target>
+  mio all     <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
+  mio cmp     <target>
+  mio elab    <target>  [-d | --debug]
+  mio cpel    <target>
+  mio sim     <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-c | --cov] [-- <args>]
   mio clean
   mio results    <target> <filename>
   mio cov        <target>
   mio dox <name> <target>
+  mio install    <target>
   mio (-h | --help)
   mio --version
 
@@ -66,6 +61,7 @@ import results
 import sim
 import utilities
 import vivado
+import install
 
 from docopt     import docopt
 import os
@@ -150,6 +146,8 @@ def do_dispatch(args):
         cov.gen_cov_report(args['<target>'])
     if args['dox']:
         dox.gen_doxygen(args['<name>'], args['<target>'])
+    if args['install']:
+        install.install_all_ips_for_target(args['<target>'])
 
 
 if __name__ == '__main__':
