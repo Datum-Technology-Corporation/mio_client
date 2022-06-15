@@ -94,7 +94,7 @@ def cmp_rtl(ip_name, args):
                                     print("Compiling RTL")
                                     print("*************\033[0m")
                                     vivado.run_bin("xvlog", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vlog_prj_file_path + " " + args + " --log " + vlog_compilation_log_path)
-                                    vivado.run_bin("xvhdl", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " " + args + " --log " + vhdl_compilation_log_path)
+                                    vivado.run_bin("xvhdl", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " --log " + vhdl_compilation_log_path)
                                     add_cmp_to_history_log(rtl_lib_name + ".vlog", vlog_compilation_log_path)
                                     add_cmp_to_history_log(rtl_lib_name + ".vhdl", vhdl_compilation_log_path)
                                 else:
