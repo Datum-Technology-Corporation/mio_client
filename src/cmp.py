@@ -1,5 +1,4 @@
 # Copyright Datum Technology Corporation
-########################################################################################################################
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
@@ -56,6 +55,8 @@ def cmp_rtl(ip_name):
     ip_dir = ""
     ip_type = ""
     ip_file_path = ""
+    if not os.path.exists(cfg.pwd + "/results"):
+        os.mkdir(cfg.pwd + "/results")
     
     with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
