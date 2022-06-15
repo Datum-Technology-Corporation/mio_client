@@ -51,7 +51,7 @@ def do_cmp_rtl(target_design):
 
 
 
-def cmp_rtl(ip_name):
+def cmp_rtl(ip_name, args):
     ip_dir = ""
     ip_type = ""
     ip_file_path = ""
@@ -93,8 +93,8 @@ def cmp_rtl(ip_name):
                                     print("\033[1;35m*************")
                                     print("Compiling RTL")
                                     print("*************\033[0m")
-                                    vivado.run_bin("xvlog", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vlog_prj_file_path + " --log " + vlog_compilation_log_path)
-                                    vivado.run_bin("xvhdl", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " --log " + vhdl_compilation_log_path)
+                                    vivado.run_bin("xvlog", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vlog_prj_file_path + " " + args + " --log " + vlog_compilation_log_path)
+                                    vivado.run_bin("xvhdl", " --relax -prj " + cfg.rtl_path + "/" + rtl_ip_name + "/" + vhdl_prj_file_path + " " + args + " --log " + vhdl_compilation_log_path)
                                     add_cmp_to_history_log(rtl_lib_name + ".vlog", vlog_compilation_log_path)
                                     add_cmp_to_history_log(rtl_lib_name + ".vhdl", vhdl_compilation_log_path)
                                 else:
@@ -103,7 +103,7 @@ def cmp_rtl(ip_name):
                                     print("*************\033[0m")
                                     vlog_flist_file_path = ""
                                     vlog_compilation_log_path = cfg.pwd + "/results/" + rtl_ip_name + ".vlog.cmp.log"
-                                    vivado.run_bin("xvlog", " --relax -sv -f " + cfg.rtl_path + "/" + rtl_ip_name + ".flist" + " --log " + vlog_compilation_log_path)
+                                    vivado.run_bin("xvlog", " --relax -sv -f " + cfg.rtl_path + "/" + rtl_ip_name + ".flist " + args + " --log " + vlog_compilation_log_path)
                                     add_cmp_to_history_log(rtl_lib_name + ".vlog", vlog_compilation_log_path)
                     else:
                         print("ERROR: Could not find Moore.io DUT IP for " + rtl_ip_name)
@@ -192,7 +192,7 @@ def cmp_rtl(ip_name):
                                     print("Compiling RTL")
                                     print("*************\033[0m")
                                     vlog_compilation_log_path = cfg.pwd + "/results/" + rtl_ip_name + ".vlog.cmp.log"
-                                    vivado.run_bin("xvlog", " --incr --relax -sv -f " + vlog_flist_file_path + " --log " + vlog_compilation_log_path + " --work " + rtl_ip_name + "=./out/" + rtl_ip_name)
+                                    vivado.run_bin("xvlog", " --incr --relax -sv -f " + vlog_flist_file_path + " " + args + " --log " + vlog_compilation_log_path + " --work " + rtl_ip_name + "=./out/" + rtl_ip_name)
                                     add_cmp_to_history_log(rtl_ip_name + ".vlog", vlog_compilation_log_path)
                         else:
                             print("ERROR: Could not find output '.eda.yml' file from FuseSoC")
@@ -204,17 +204,17 @@ def cmp_rtl(ip_name):
 
 
 
-def cmp_dv(ip_name):
+def cmp_dv(ip_name, args):
     with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
             filelist_path = cfg.dv_path + "/" + ip_name + "/" + dv_yaml['hdl-src']['flists']['vivado'][0]
-        do_cmp_dv(filelist_path, ip_name)
+        do_cmp_dv(filelist_path, ip_name, args)
 
 
 
 
-def do_cmp_dv(filelist_path, lib_name):
+def do_cmp_dv(filelist_path, lib_name, args):
     if (cfg.dbg):
         print("Call to do_cmp_dv(filelist_path='" + filelist_path + "', lib_name='" + lib_name + "')")
     print("\033[0;36m************")
@@ -224,4 +224,4 @@ def do_cmp_dv(filelist_path, lib_name):
         os.mkdir(cfg.pwd + "/results")
     compilation_log_path = cfg.pwd + "/results/" + lib_name + ".cmp.log"
     add_cmp_to_history_log(lib_name, compilation_log_path)
-    vivado.run_bin("xvlog", "--incr -sv -f " + filelist_path + " -L uvm --work " + lib_name + "=./out/" + lib_name + " --log " + compilation_log_path)
+    vivado.run_bin("xvlog", "--incr -sv -f " + filelist_path + " " + args + " -L uvm --work " + lib_name + "=./out/" + lib_name + " --log " + compilation_log_path)

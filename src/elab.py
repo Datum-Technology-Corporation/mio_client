@@ -1,5 +1,4 @@
 # Copyright Datum Technology Corporation
-########################################################################################################################
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
@@ -40,7 +39,7 @@ def add_elab_to_history_log(snapshot, elaboration_log_path):
 
 
 
-def elab(ip_name):
+def elab(ip_name, args):
     with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
         dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
         if dv_yaml:
@@ -65,7 +64,7 @@ def elab(ip_name):
                                 rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
                                 xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
                                 top_rtl_constructs = rtl_yaml['hdl-src']['top-constructs']
-                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs)
+                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs, args)
                             else:
                                 print("ERROR: Elaboration of non-Vivado RTL Project DUTs is not yet supported")
                 elif (rtl_ip_type == "fsoc"):
@@ -79,7 +78,7 @@ def elab(ip_name):
                             eda_yaml = yaml.load(edafile, Loader=SafeLoader)
                             if eda_yaml:
                                 elab_options = eda_yaml['tool_options']['xsim']['xelab_options']
-                                do_dut_fsoc_elab(ip_name, rtl_ip_name, top_dv_constructs)
+                                do_dut_fsoc_elab(ip_name, rtl_ip_name, top_dv_constructs, args)
                             else:
                                 print("ERROR: Unable to parse " + edafile)
                     else:
@@ -88,12 +87,12 @@ def elab(ip_name):
                     return
             else:
                 top_hdl_unit = dv_yaml['hdl-src']['top-constructs']
-                do_elab(ip_name, top_hdl_unit)
+                do_elab(ip_name, top_hdl_unit, args)
 
 
 
 
-def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs):
+def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs, args):
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
@@ -107,14 +106,14 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
         top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
     for lib in xilinx_libs:
         lib_string = lib_string + " -L " + lib
-    vivado.run_bin("xelab", " --relax -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --relax " + args + " -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
 
 
 
-def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs):
+def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs, args):
     top_dv_constructs_string = ""
     for construct in top_dv_constructs:
         top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
@@ -122,14 +121,14 @@ def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs):
     print("Elaborating")
     print("***********\033[0m")
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
-    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax " + args + " --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
 
 
 
-def do_elab(lib_name, top_dv_constructs):
+def do_elab(lib_name, top_dv_constructs, args):
     
     debug_str = ""
     top_dv_constructs_string = ""
@@ -158,5 +157,5 @@ def do_elab(lib_name, top_dv_constructs):
 
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
     add_elab_to_history_log(lib_name, elaboration_log_path)
-    vivado.run_bin("xelab", top_dv_constructs_string + cov_str + debug_str + " --incr -relax --O0 -v 0 -s " + top_dv_constructs[0] + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", top_dv_constructs_string + cov_str + debug_str + " " + args + " --incr -relax --O0 -v 0 -s " + top_dv_constructs[0] + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log " + elaboration_log_path)
     

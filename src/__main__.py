@@ -124,9 +124,21 @@ def do_dispatch(args):
         cfg.glb_cfg['sim_gui'] = False
     
     if args['<args>'] == None:
-        final_args = []
+        all_args = []
     else:
-        final_args = args['<args>'].split()
+        all_args = re.sub("\"", "", args['<args>'])
+        all_args = all_args.split()
+    
+    args_str = ""
+    plus_args = []
+    regex_pattern = "\+define\+((?:\w|_|\d)+(?:\=(?:\w|_|\d)+)?)"
+    for arg in all_args:
+        result = re.match(regex_pattern, arg)
+        if result:
+            define_arg = result.group()
+            args_str = args_str + " --define " + define_arg # Only for vivado
+        else:
+            plus_args.append(arg)
     
     if args['clean']:
         clean.do_clean()
@@ -134,12 +146,12 @@ def do_dispatch(args):
         out_path = cfg.pwd + "/out"
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        cmp.cmp_rtl(args['<target>'])
-        cmp.cmp_dv (args['<target>'])
+        cmp.cmp_rtl(args['<target>'], args_str)
+        cmp.cmp_dv (args['<target>'], args_str)
     if args['elab']:
-        elab.elab(args['<target>'])
+        elab.elab(args['<target>'], args_str)
     if args['sim']:
-        sim.sim(args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], final_args)
+        sim.sim(args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], plus_args)
     if args['results']:
         results.do_parse_results(args['<target>'], args['<filename>'])
     if args['cov']:
