@@ -103,7 +103,7 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
     for construct in top_rtl_constructs:
         top_rtl_constructs_string = top_rtl_constructs_string + " " + construct
     for construct in top_dv_constructs:
-        top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
+        top_dv_constructs_string = top_dv_constructs_string + " " + ip_name + "." + construct
     for lib in xilinx_libs:
         lib_string = lib_string + " -L " + lib
     vivado.run_bin("xelab", " --relax " + args + " -debug all --mt auto -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + lib_string + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " " + top_rtl_constructs_string + " --log " + elaboration_log_path)

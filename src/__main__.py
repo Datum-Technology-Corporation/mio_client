@@ -135,7 +135,7 @@ def do_dispatch(args):
     for arg in all_args:
         result = re.match(regex_pattern, arg)
         if result:
-            define_arg = result.group()
+            define_arg = result.group(1)
             args_str = args_str + " --define " + define_arg # Only for vivado
         else:
             plus_args.append(arg)
