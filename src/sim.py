@@ -164,6 +164,6 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     print("* View simulation results")
     print("************************************************************************************************************************")
     print("Open log file: emacs ./results/" + test_name + "_" + str(seed) + "/sim.log &")
-    if (cfg.sim_waves == True):
+    if (cfg.glb_cfg['sim_waves'] == True):
         print("View waves: " + cfg.vivado_path + "xsim -gui ./results/" + test_name + "_" + str(seed) + "/waves.wdb &")
     print("************************************************************************************************************************")
