@@ -120,7 +120,7 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     print("Simulating")
     print("**********\033[0m")
     
-    if (cfg.sim_waves == True):
+    if (cfg.glb_cfg['sim_waves'] == True):
         if not os.path.exists(tests_results_path + "/run.xsim.tcl"):
             f = open(tests_results_path + "/run.xsim.tcl", "w")
             f.write("log_wave -recursive *")
@@ -133,18 +133,18 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     else:
         waves_str = ""
     
-    if (cfg.sim_gui == True):
+    if (cfg.glb_cfg['sim_gui'] == True):
         gui_str = " --gui "
         runall_str = ""
         waves_str = ""
     else:
         gui_str = ""
-        if (cfg.sim_waves == True):
+        if (cfg.glb_cfg['sim_waves'] == True):
             runall_str = ""
         else:
             runall_str = " --runall --onerror quit"
     
-    if (cfg.sim_cov == True):
+    if (cfg.glb_cfg['sim_cov'] == True):
         if not os.path.exists(tests_results_path + "/cov"):
             os.mkdir(tests_results_path + "/cov")
         cov_str = " -cov_db_name " + name + "_" + str(seed) + " -cov_db_dir " + tests_results_path + "/cov"
