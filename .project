@@ -16,8 +16,8 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1636262154356</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -25,8 +25,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154362</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -34,8 +34,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154367</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -43,8 +43,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154371</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -52,8 +52,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154376</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -61,8 +61,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154381</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -70,8 +70,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154388</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -79,8 +79,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154392</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -88,8 +88,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154397</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -97,8 +97,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1636262154401</id>
-			<name>sim</name>
+			<id>0</id>
+			<name>tests/e2e/sim</name>
 			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>

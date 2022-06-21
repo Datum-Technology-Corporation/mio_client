@@ -4,9 +4,24 @@
 ########################################################################################################################
 
 
-import subprocess
+import cfg
+import clean
+import cmp
+import cov
+import dox
+import elab
+import results
+import sim
+import vivado
+import utilities
 
 
-def gen_doxygen(name, path_in):
-    args = "SRC_PATH=" + path_in + " MIO_HOME=${MIO_HOME} IP_NAME=" + name
-    subprocess.call(args + " doxygen ../dv/" + name + "/bin/doxygen.cfg", shell=True)
+import os
+import yaml
+
+
+def create_history_log():
+    if not os.path.exists(cfg.history_file_path):
+        with open(cfg.history_file_path,'w') as yamlfile:
+            yaml.dump({}, yamlfile)
+

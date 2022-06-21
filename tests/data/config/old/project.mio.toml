@@ -1,0 +1,121 @@
+# Copyright 2021 Datum Technology Corporation
+########################################################################################################################
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+########################################################################################################################
+
+
+## README
+# This is a sample configuration file for the moore.io platform
+# Although it differs in its language, it serves the same purpose as npm's .npmrc files and follow the same hierarchy: https://docs.npmjs.com/cli/v6/configuring-npm/npmrc#files
+# This is essentially a data store used by various mio commands to determine their behavior
+
+
+
+title = "Moore.io ARM Project Configuration"                                                       # Standard for toml files -- don't care from mio standpoint
+
+[project]                                                                                          ### Project information
+uuid = 98ef38ed-f52f-4505-917f-d9f1bf554caf                                                        # Unique ID for project, should never change after first commit
+name = "mio_arm"                                                                                   # Project name (aka "short name")
+codename = ""                                                                                      # Informal project name (optional)
+full-name = "Moore.io ARM"                                                                         # Full project name
+description = ""                                                                                   # Project description (optional)
+org-name = "Datum Technology Corporation"                                                          # Org name (optional)
+
+
+[contributors]                                                                                     ### People who work on this project
+	[[contributors.editor]]                                                                        ## read/write
+	name = "David Poulin"                                                                          #
+	email = "dpoulin@datumtc.ca"                                                                   #
+	org = "Datum Technology Corporation"                                                           #
+	
+	[[contributors.manager]]                                                                       ## almost all privileges
+	name = "Big Head"                                                                              # 
+	email = "guy1@acme.com"                                                                        # 
+	org = "Acme Corp"                                                                              # 
+	
+	[[contributors.admin]]                                                                         ## all privileges
+	name = "Bigger Head"                                                                           # 
+	email = "guy2@acme.com"                                                                        # 
+	org = "Acme Corp"                                                                              # 
+
+
+[eda]                                                                                              ### EDA tools
+	[[eda.simulator]]                                                                              # Simulator entry
+	name = "xilinx"                                                                                # names are from enum {synopsys, cadence, mentor, metrics, aldec, xilinx, verilator, custom}
+	version = "2020.2"                                                                             # Project semver
+	path = "/tools/xilinx/vivado_2020_2/"                                                          # Path to tool root dir, can include mio vars ( {{var}} ) or environment vars ( $VAR )
+
+
+[[license-server]]                                                                                 ### License server information (TBD)
+
+
+
+[dft]                                                                                              ### Design-for-test settings
+project-path = "/dft"                                                                               # 
+
+[structure]
+rtl-src-paths   = ["./rtl"   ]
+dv-src-paths    = ["./dv"    ]
+edapp-src-paths = ["./tools" ]
+dependencies-path = "/.mio/vendors"
+
+
+[rtl-ip]
+src-paths = ["./rtl"]
+dependencies-path = "/.mio/imports"
+default-ip = ""
+
+
+[verification-ip]
+src-paths = ["./dv"]
+project-dependencies-path = "/dv/.imports"
+default-vip = ""
+
+
+[edapp-ip]
+src-paths = ["./tools"]
+dependencies-path = "./tools/.imports"
+
+
+[lint]
+path = "./lint"
+default-linters = [ { name = 'verilator' , version = '^' } ]
+
+
+[synthesis]
+path = "./syn"
+default-synthesizers = [ { name = 'vivado' , version = '^' } ]
+
+
+[simulation]
+path = "./sim"
+results-path = "./sim/results"
+outputs-path = "./sim/out"
+test-result-path-template = "./{{ ip_name }}_{{ test_name }}/{{ seed }}"
+preffered-simulators = [ { name = "xilinx", version = "^" } ]
+artifacts-paths = [ "/proj/arm/sw/rel/latest/bin/images/*.hex" ]
+default-test-bench = ""
+default-test = ""
+
+
+[[version-control]]
+type = "git"
+url = "https://github.com/Datum-Technology-Corporation/mio_arm"
+user-name = "peon"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"
+
+
+[[scheduling]]
+type = "grid"
+hosts = ["grid1.datumint.com"]
+user-name = "peon"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"
+default-queue = "default"
+default-priority = "medium"
+
+
+[[ci]]
+type = "jenkins"
+url = "http://datumint.com/ci/jenkins/mio_arm"
+user-name = "admin"
+password = "3700adf1f25fab8202c1343c4b0b4e3fec706d57cad574086467b8b3ddf273ec"

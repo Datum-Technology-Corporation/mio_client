@@ -1,19 +1,20 @@
-#! /usr/bin/python3 
+# Copyright Datum Technology Corporation
 ########################################################################################################################
-## Copyright 2021 Datum Technology Corporation
-########################################################################################################################
-## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
-## Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may not use this file except in compliance
-## with the License, or, at your option, the Apache License version 2.0.  You may obtain a copy of the License at
-##                                        https://solderpad.org/licenses/SHL-2.1/
-## Unless required by applicable law or agreed to in writing, any work distributed under the License is distributed on
-## an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
-## specific language governing permissions and limitations under the License.
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
+
+import cfg
+import clean
+import cmp
+import dox
+import elab
+import history
+import results
+import sim
+import vivado
 
 import os
-import mio
 import yaml
 from yaml.loader import SafeLoader
 from datetime import datetime
@@ -25,14 +26,14 @@ def gen_cov_report(cfg, sim_lib):
     # TODO Bring back coverage merge once it is done per sim
     dir_string = ""
     db_name_string = ""
-    merge_string = "-merge_dir " + mio.pwd + "/cov/merge" + " -merge_db_name " + sim_lib
+    merge_string = "-merge_dir " + cfg.pwd + "/cov/merge" + " -merge_db_name " + sim_lib
     now = datetime.now()
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
     print("Parsing results ...")
-    if not os.path.exists(mio.history_file_path):
+    if not os.path.exists(cfg.history_file_path):
         sys.exit("No history log file")
     else:
-        with open(mio.history_file_path,'r') as yamlfile:
+        with open(cfg.history_file_path,'r') as yamlfile:
             cur_yaml = yaml.load(yamlfile, Loader=SafeLoader)
             if not cur_yaml:
                 sys.exit("Failed to open history log file")
@@ -46,9 +47,9 @@ def gen_cov_report(cfg, sim_lib):
                             dir_string     = dir_string + " -dir " + cov_path
                             db_name_string = db_name_string + " -db_name " + cur_yaml[sim_lib]['simulations'][sim]['test_name'] + "_" + cur_yaml[sim_lib]['simulations'][sim]['seed']
     
-    if not os.path.exists(mio.pwd + "/cov"):
-        os.mkdir(mio.pwd + "/cov")
-    if not os.path.exists(mio.pwd + "/cov/reports"):
-        os.mkdir(mio.pwd + "/cov/reports")
-    mio.run_xsim_bin("xcrg", dir_string + " " + db_name_string + " " + merge_string + " -report_format text -report_dir " + mio.pwd + "/cov/reports/" + sim_lib)
+    if not os.path.exists(cfg.pwd + "/cov"):
+        os.mkdir(cfg.pwd + "/cov")
+    if not os.path.exists(cfg.pwd + "/cov/reports"):
+        os.mkdir(cfg.pwd + "/cov/reports")
+    vivado.run_bin("xcrg", dir_string + " " + db_name_string + " " + merge_string + " -report_format text -report_dir " + cfg.pwd + "/cov/reports/" + sim_lib)
 
