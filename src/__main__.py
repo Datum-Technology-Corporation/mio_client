@@ -4,15 +4,7 @@
 ########################################################################################################################
 
 
-"""Moore.io Command Line Interface (CLI) Client.
-
-                              ███╗   ███╗ ██████╗  ██████╗ ██████╗ ███████╗   ██╗ ██████╗
-                              ████╗ ████║██╔═══██╗██╔═══██╗██╔══██╗██╔════╝   ██║██╔═══██╗
-                              ██╔████╔██║██║   ██║██║   ██║██████╔╝█████╗     ██║██║   ██║
-                              ██║╚██╔╝██║██║   ██║██║   ██║██╔══██╗██╔══╝     ██║██║   ██║
-                              ██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║  ██║███████╗██╗██║╚██████╔╝
-                              ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝ ╚═════╝
-                            Moore.io (`mio`) Command Line Interface (CLI) - Pre-Beta Edition
+"""                            Moore.io (`mio`) Command Line Interface (CLI) - Pre-Beta Edition
 
                NOTE: THE FOLLOWING INTERFACE DEFINITION WILL BE SUBJECT TO DEPRECATION IN THE NEAR FUTURE
                      IN FAVOR OF A MUCH LARGER, FAR BETTER ENCOMPASSING VERSION:
