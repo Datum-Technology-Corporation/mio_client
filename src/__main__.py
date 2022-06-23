@@ -1,4 +1,5 @@
 #! /usr/bin/python3 
+# -*- coding: UTF-8 -*-
 ########################################################################################################################
 ## Copyright 2021 Datum Technology Corporation
 ## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
@@ -13,11 +14,7 @@
                               ██║╚██╔╝██║██║   ██║██║   ██║██╔══██╗██╔══╝     ██║██║   ██║
                               ██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║  ██║███████╗██╗██║╚██████╔╝
                               ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝ ╚═════╝
-                            Moore.io (`mio`) Command Line Interface (CLI) - Pre-Beta Edition
-
-               NOTE: THE FOLLOWING INTERFACE DEFINITION WILL BE SUBJECT TO DEPRECATION IN THE NEAR FUTURE
-                     IN FAVOR OF A MUCH LARGER, FAR BETTER ENCOMPASSING VERSION:
-                           https://github.com/Datum-Technology-Corporation/mio_cli/tree/main/mio/cli
+                            Moore.io (`mio`) Command Line Interface (CLI) - v1p0
 
 Usage:
   mio install <target>
@@ -62,6 +59,7 @@ import sim
 import utilities
 import vivado
 import install
+import discovery
 
 from docopt     import docopt
 import os
@@ -80,6 +78,11 @@ def do_dispatch(args):
     
     if (cfg.dbg):
         print("Call to do_dispatch()")
+    
+    discovery.find_project_toml_file()
+    discovery.load_configuration()
+    discovery.catalog_ips()
+    discovery.set_env_vars()
     
     if not args['<seed>']:
         args['<seed>'] = 1
@@ -139,6 +142,8 @@ def do_dispatch(args):
             args_str = args_str + " --define " + define_arg # Only for vivado
         else:
             plus_args.append(arg)
+    
+    
     
     if args['clean']:
         clean.do_clean()
