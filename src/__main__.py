@@ -1,4 +1,5 @@
 #! /usr/bin/python3 
+# -*- coding: UTF-8 -*-
 ########################################################################################################################
 ## Copyright 2021 Datum Technology Corporation
 ## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
