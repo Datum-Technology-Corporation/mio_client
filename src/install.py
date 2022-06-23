@@ -5,6 +5,8 @@ import yaml
 from yaml import SafeLoader
 
 import cfg
+import discovery
+
 import requests
 import getpass
 import tarfile
@@ -55,6 +57,7 @@ def install_mio_ip(name, location):
         tar = tarfile.open(filename, "r:gz")
         tar.extractall(location + "/" + name)
         tar.close()
+        os.remove(location + "/" + name)
     else:
         print("ERROR: Could not find IP '" + name + "' on Moore.io server")
 
@@ -77,16 +80,12 @@ def login():
 
 def get_ips_for_target(ip_name):
     dependencies = []
-    with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
-        dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-        if dv_yaml:
-            if 'dependencies' in dv_yaml:
-                for dependency in dv_yaml['dependencies']:
-                    dependencies.append(dependency['name'])
-            else:
-                print("ERROR: no dependencies section in " + ip_name + "'s ip.yml")
-        else:
-            print("ERROR: failed to parse " + ip_name + "'s ip.yml")
+    ip_metadata = discovery.ip_metadata[ip_name]
+    if 'dependencies' in ip_metadata:
+        for dependency in ip_metadata['dependencies']:
+            dependencies.append(dependency['name'])
+    else:
+        print("ERROR: no dependencies section in " + ip_name + "'s ip.yml")
     return dependencies
 
 
@@ -102,4 +101,4 @@ def install_mio_ips(name, ip_list, location):
 
 def install_all_ips_for_target(target_name):
     ip_list = get_ips_for_target(target_name)
-    install_mio_ips(target_name, ip_list, cfg.dv_imports_path)
+    install_mio_ips(target_name, ip_list, cfg.dependencies_path)

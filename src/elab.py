@@ -12,6 +12,8 @@ import history
 import results
 import sim
 import vivado
+import discovery
+import utilities
 
 import re
 import yaml
@@ -24,14 +26,13 @@ import os
 def add_elab_to_history_log(snapshot, elaboration_log_path):
     now = datetime.now()
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
-    if not os.path.exists(cfg.history_file_path):
-        create_history_log()
+    utilities.create_history_log()
     with open(cfg.history_file_path,'r') as yamlfile:
         cur_yaml = yaml.load(yamlfile, Loader=SafeLoader) # Note the safe_load
         if not snapshot in cur_yaml:
             cur_yaml[snapshot] = {}
         cur_yaml[snapshot]['elaboration_timestamp'] = timestamp
-        cur_yaml[snapshot]['elaboration_log_path'] = elaboration_log_path
+        cur_yaml[snapshot]['elaboration_log_path' ] = elaboration_log_path
     if cur_yaml:
         with open(cfg.history_file_path,'w') as yamlfile:
             yaml.dump(cur_yaml, yamlfile) # Also note the safe_dump
@@ -40,54 +41,53 @@ def add_elab_to_history_log(snapshot, elaboration_log_path):
 
 
 def elab(ip_name, args):
-    with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
-        dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-        if dv_yaml:
-            if 'dut' in dv_yaml:
-                rtl_ip_name = dv_yaml['dut']['name']
-                rtl_ip_type = dv_yaml['dut']['ip-type']
-                top_dv_constructs = dv_yaml['hdl-src']['top-constructs']
-                
-                if (rtl_ip_type == "mio"):
-                    if os.path.exists(cfg.rtl_path + "/" + rtl_ip_name): # Search for IP in RTL dir
-                        ip_dir = cfg.rtl_path + "/" + rtl_ip_name
-                    elif os.path.exists(cfg.rtl_path + "/.imports/" + rtl_ip_name): # If not found, look in .imports dir
-                        ip_dir = cfg.rtl_path + "/.imports/" + rtl_ip_name
-                    else:
-                        print("ERROR: Could not find DUT IP " + rtl_ip_name)
-                        return
-                    with open(cfg.rtl_path + "/" + rtl_ip_name + "/ip.yml", 'r') as yamlfile:
-                        rtl_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-                        if rtl_yaml:
-                            rtl_sub_type = rtl_yaml['ip']['sub-type'].lower().strip()
-                            if (rtl_sub_type == "vivado"):
-                                rtl_lib_name = rtl_yaml['hdl-src']['lib-name']
-                                xilinx_libs  = rtl_yaml['hdl-src']['xilinx-libs']
-                                top_rtl_constructs = rtl_yaml['hdl-src']['top-constructs']
-                                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs, args)
-                            else:
-                                print("ERROR: Elaboration of non-Vivado RTL Project DUTs is not yet supported")
-                elif (rtl_ip_type == "fsoc"):
-                    fsoc_fname  = dv_yaml['dut']['full-name']
-                    file_path_partial_name = re.sub(r':', '_', fsoc_fname)
-                    eda_file_dir = cfg.pwd + "/fsoc/" + rtl_ip_name + "/sim-xsim"
-                    eda_file_path = eda_file_dir + "/" + file_path_partial_name + "_0.eda.yml"
-                    
-                    if os.path.exists(eda_file_path):
-                        with open(eda_file_path, 'r') as edafile:
-                            eda_yaml = yaml.load(edafile, Loader=SafeLoader)
-                            if eda_yaml:
-                                elab_options = eda_yaml['tool_options']['xsim']['xelab_options']
-                                do_dut_fsoc_elab(ip_name, rtl_ip_name, top_dv_constructs, args)
-                            else:
-                                print("ERROR: Unable to parse " + edafile)
-                    else:
-                        print("ERROR: Could not find " + edafile)
-                else:
-                    return
+    if ip_name not in discovery.ip_paths:
+        sys.exit("Failed to find IP '" + ip_name + "'.  Exiting.")
+    else:
+        ip_path     = discovery.ip_paths   [ip_name]
+        ip_metadata = discovery.ip_metadata[ip_name]
+    
+    if 'dut' in ip_metadata:
+        rtl_ip_name = ip_metadata['dut']['name']
+        rtl_ip_type = ip_metadata['dut']['ip-type']
+        top_dv_constructs = ip_metadata['hdl-src']['top-constructs']
+        
+        if (rtl_ip_type == "mio"):
+            if rtl_ip_name not in discovery.ip_paths:
+                sys.exit("Failed to find RTL IP '" + rtl_ip_name + "'.  Exiting.")
             else:
-                top_hdl_unit = dv_yaml['hdl-src']['top-constructs']
-                do_elab(ip_name, top_hdl_unit, args)
+                rtl_ip_path     = discovery.ip_paths   [rtl_ip_name]
+                rtl_ip_metadata = discovery.ip_metadata[rtl_ip_name]
+            
+            rtl_sub_type = rtl_ip_metadata['ip']['sub-type'].lower().strip()
+            if (rtl_sub_type == "vivado"):
+                rtl_lib_name = rtl_ip_metadata['hdl-src']['lib-name']
+                xilinx_libs  = rtl_ip_metadata['hdl-src']['xilinx-libs']
+                top_rtl_constructs = rtl_ip_metadata['hdl-src']['top-constructs']
+                do_dut_vivado_elab(ip_name, rtl_lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs, args)
+            else:
+                print("ERROR: Elaboration of non-Vivado RTL Project DUTs is not yet supported")
+        elif (rtl_ip_type == "fsoc"):
+            fsoc_fname  = ip_metadata['dut']['full-name']
+            file_path_partial_name = re.sub(r':', '_', fsoc_fname)
+            eda_file_dir = cfg.pwd + "/fsoc/" + rtl_ip_name + "/sim-xsim"
+            eda_file_path = eda_file_dir + "/" + file_path_partial_name + "_0.eda.yml"
+            
+            if os.path.exists(eda_file_path):
+                with open(eda_file_path, 'r') as edafile:
+                    eda_yaml = yaml.load(edafile, Loader=SafeLoader)
+                    if eda_yaml:
+                        elab_options = eda_yaml['tool_options']['xsim']['xelab_options']
+                        do_dut_fsoc_elab(ip_name, rtl_ip_name, top_dv_constructs, args)
+                    else:
+                        print("ERROR: Unable to parse " + edafile)
+            else:
+                print("ERROR: Could not find " + edafile)
+        else:
+            return
+    else:
+        top_hdl_unit = ip_metadata['hdl-src']['top-constructs']
+        do_elab(ip_name, top_hdl_unit, args)
 
 
 
@@ -96,7 +96,7 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
-    elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
+    elaboration_log_path = cfg.sim_results_dir + "/" + lib_name + ".elab.log"
     lib_string = ""
     top_rtl_constructs_string = ""
     top_dv_constructs_string = ""
@@ -155,7 +155,7 @@ def do_elab(lib_name, top_dv_constructs, args):
     else: 
         cov_str = " -ignore_coverage "
 
-    elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
+    elaboration_log_path = cfg.sim_results_dir + "/" + lib_name + ".elab.log"
     add_elab_to_history_log(lib_name, elaboration_log_path)
     vivado.run_bin("xelab", top_dv_constructs_string + cov_str + debug_str + " " + args + " --incr -relax --O0 -v 0 -s " + top_dv_constructs[0] + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log " + elaboration_log_path)
     

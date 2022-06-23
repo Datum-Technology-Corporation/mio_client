@@ -12,6 +12,8 @@ import elab
 import history
 import results
 import vivado
+import discovery
+import utilities
 
 import os
 from datetime import datetime
@@ -23,10 +25,7 @@ def add_sim_to_history_log(snapshot, test_name, seed, args, results_path):
     now = datetime.now()
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
     
-    if not os.path.exists(cfg.history_file_path):
-        f = open(cfg.history_file_path, "w+")
-        f.write("---")
-        f.close()
+    utilities.create_history_log()
     with open(cfg.history_file_path,'r') as yamlfile:
         cur_yaml = yaml.load(yamlfile, Loader=SafeLoader) # Note the safe_load
         if not cur_yaml:
@@ -39,12 +38,12 @@ def add_sim_to_history_log(snapshot, test_name, seed, args, results_path):
                 cur_yaml[snapshot]['simulations'] = {}
             cur_yaml[snapshot]['simulations'][results_path] = {}
             cur_yaml[snapshot]['simulations'][results_path]['test_name'] = test_name
-            cur_yaml[snapshot]['simulations'][results_path]['seed'] = seed
-            cur_yaml[snapshot]['simulations'][results_path]['args'] = args
-            cur_yaml[snapshot]['simulations'][results_path]['results'] = results_path
-            cur_yaml[snapshot]['simulations'][results_path]['start'] = timestamp
-            cur_yaml[snapshot]['simulations'][results_path]['cov'] = cfg.sim_cov
-            cur_yaml[snapshot]['simulations'][results_path]['waves'] = cfg.sim_waves
+            cur_yaml[snapshot]['simulations'][results_path]['seed'     ] = seed
+            cur_yaml[snapshot]['simulations'][results_path]['args'     ] = args
+            cur_yaml[snapshot]['simulations'][results_path]['results'  ] = results_path
+            cur_yaml[snapshot]['simulations'][results_path]['start'    ] = timestamp
+            cur_yaml[snapshot]['simulations'][results_path]['cov'      ] = cfg.glb_cfg['sim_cov']
+            cur_yaml[snapshot]['simulations'][results_path]['waves'    ] = cfg.glb_cfg['sim_waves']
             with open(cfg.history_file_path,'w') as yamlfile:
                 yaml.dump(cur_yaml, yamlfile) # Also note the safe_dump
 
@@ -55,8 +54,7 @@ def update_sim_timestamp_in_history_log(snapshot, orig_timestamp, tests_results_
     now = datetime.now()
     duration = now - orig_timestamp
     timestamp = now.strftime("%Y/%m/%d-%H:%M:%S")
-    if not os.path.exists(cfg.history_file_path):
-        print("No history log file!")
+    utilities.create_history_log()
     with open(cfg.history_file_path) as yamlfile:
         cur_yaml = yaml.load(yamlfile, Loader=SafeLoader) # Note the safe_load
         if not cur_yaml:
@@ -72,11 +70,14 @@ def update_sim_timestamp_in_history_log(snapshot, orig_timestamp, tests_results_
 
 
 def sim(ip_name, test, seed, verbosity, args):
-    with open(cfg.dv_path + "/" + ip_name + "/ip.yml", 'r') as yamlfile:
-        dv_yaml = yaml.load(yamlfile, Loader=SafeLoader)
-        if dv_yaml:
-            test_name = dv_yaml['hdl-src']['test-name-template'].replace("{{ name }}", test)
-            do_sim(ip_name, test_name, seed, verbosity, args)
+    if ip_name not in discovery.ip_paths:
+        sys.exit("Failed to find IP '" + ip_name + "'.  Exiting.")
+    else:
+        ip_path     = discovery.ip_paths   [ip_name]
+        ip_metadata = discovery.ip_metadata[ip_name]
+    
+    test_name = ip_metadata['hdl-src']['test-name-template'].replace("{{ name }}", test)
+    do_sim(ip_name, test_name, seed, verbosity, args)
 
 
 
@@ -89,17 +90,16 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     gui_str   = ""
     runall_str   = ""
     
-    tests_results_path = cfg.pwd + "/results/" + test_name + "_" + str(seed)
+    tests_results_path = cfg.sim_results_dir + "/" + test_name + "_" + str(seed)
+    tb_ip_path = discovery.ip_paths[lib_name]
     
     orig_plus_args = list(plus_args)
-    plus_args.append("SIM_DIR_RESULTS="                 + cfg.pwd + "/results")
+    plus_args.append("SIM_DIR_RESULTS="                 + cfg.sim_results_dir)
     plus_args.append("UVM_TESTNAME="                    + test_name)
-    plus_args.append("UVML_FILE_BASE_DIR_SIM="          + cfg.pwd)
-    plus_args.append("UVML_FILE_BASE_DIR_TB="           + cfg.dv_path  + "/" + lib_name + "/src")
-    plus_args.append("UVML_FILE_BASE_DIR_TESTS="        + cfg.dv_path  + "/" + lib_name + "/src/tests")
+    plus_args.append("UVML_FILE_BASE_DIR_SIM="          + cfg.sim_dir)
+    plus_args.append("UVML_FILE_BASE_DIR_TB="           + tb_ip_path + "/src")
+    plus_args.append("UVML_FILE_BASE_DIR_TESTS="        + tb_ip_path + "/src/tests")
     plus_args.append("UVML_FILE_BASE_DIR_TEST_RESULTS=" + tests_results_path)
-    plus_args.append("UVML_FILE_BASE_DIR_DV="           + cfg.dv_path)
-    plus_args.append("UVML_FILE_BASE_DIR_RTL="          + cfg.rtl_path)
     
     if (verbosity != None):
         plus_args.append("UVM_VERBOSITY=UVM_" + verbosity.upper())

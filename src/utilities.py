@@ -1,5 +1,4 @@
 # Copyright Datum Technology Corporation
-########################################################################################################################
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
@@ -14,6 +13,9 @@ import history
 import results
 import sim
 import vivado
+
+import os
+import yaml
 
 
 def set_env_var(name, value):
@@ -30,3 +32,12 @@ def copy_tree(src, dst, symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+
+
+def create_history_log():
+    if not os.path.exists(cfg.history_file_path):
+        if cfg.dbg:
+            print("Creating history.yaml file at " + cfg.history_file_path)
+        with open(cfg.history_file_path, 'w') as yamlfile:
+            yaml.dump({}, yamlfile)
+
