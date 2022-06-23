@@ -1,21 +1,19 @@
 #! /usr/bin/python3 
 # -*- coding: UTF-8 -*-
 ########################################################################################################################
-## Copyright 2021 Datum Technology Corporation
-## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+# Copyright 2021 Datum Technology Corporation
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
 
-"""Moore.io Command Line Interface (CLI) Client.
-
+"""
                               ███╗   ███╗ ██████╗  ██████╗ ██████╗ ███████╗   ██╗ ██████╗
                               ████╗ ████║██╔═══██╗██╔═══██╗██╔══██╗██╔════╝   ██║██╔═══██╗
                               ██╔████╔██║██║   ██║██║   ██║██████╔╝█████╗     ██║██║   ██║
                               ██║╚██╔╝██║██║   ██║██║   ██║██╔══██╗██╔══╝     ██║██║   ██║
                               ██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║  ██║███████╗██╗██║╚██████╔╝
                               ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝ ╚═════╝
-                            Moore.io (`mio`) Command Line Interface (CLI) - v1p0
-
+                                  Moore.io (`mio`) Command Line Interface (CLI) - v1p0
 Usage:
   mio install <target>
   mio all     <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
