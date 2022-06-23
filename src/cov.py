@@ -21,7 +21,7 @@ from datetime import datetime
 
 
 #xcrg  -dir a1  -dir b1  -db_name d1  -db_name   d2  -merge_dir    m1   -merge_db_name   n1 -log result.txt  -report_format   html  -report_dir    report1
-def gen_cov_report(cfg, sim_lib):
+def gen_cov_report(sim_lib):
     print("Generating coverage report for " + sim_lib)
     # TODO Bring back coverage merge once it is done per sim
     dir_string = ""
