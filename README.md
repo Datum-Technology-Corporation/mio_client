@@ -2,6 +2,12 @@
 ## About
 The Moore.io Command Line Interface (CLI) Client is a toolchain for front-end engineering of FPGA/ASIC projects.
 
+## Building documentation
+````
+cd docs
+make html
+firefox ./_build/html/index.html
+````
 
 ## Usage
 ````
