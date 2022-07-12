@@ -13,6 +13,7 @@ import tarfile
 import json
 from pathlib import Path
 from base64 import b64decode
+import os
 
 
 base_url          = "https://mooreio.org"#"http://localhost:8080"

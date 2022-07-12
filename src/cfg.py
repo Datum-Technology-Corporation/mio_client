@@ -20,7 +20,7 @@ import sys
 import re
 
 
-dbg             = True
+dbg             = False
 sim_debug       = False
 sim_gui         = False
 sim_waves       = False
@@ -48,7 +48,7 @@ rtl_path          = project_dir + "/rtl"
 rtl_libs_path     = rtl_path + "/.imports"
 dv_path           = project_dir + "/dv"
 dv_imports_path   = dv_path + "/.imports"
-history_file_path = sim_dir + "/history.yaml"
+history_file_path = mio_data_dir + "/history.yaml"
 test_results_path_template = "{{ ip_name }}_{{ test_name }}_{{ seed }}"
 
 templateLoader = jinja2.FileSystemLoader(searchpath=mio_template_dir)
