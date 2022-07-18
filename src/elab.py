@@ -116,7 +116,7 @@ def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rt
 def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs, args):
     top_dv_constructs_string = ""
     for construct in top_dv_constructs:
-        top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
+        top_dv_constructs_string = top_dv_constructs_string + " " + ip_name + "." + construct
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
