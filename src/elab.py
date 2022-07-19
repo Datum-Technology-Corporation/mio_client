@@ -92,6 +92,7 @@ def elab(ip_name, args):
 
 
 
+
 def do_dut_vivado_elab(ip_name, lib_name, xilinx_libs, top_dv_constructs, top_rtl_constructs, args):
     print("\033[0;36m***********")
     print("Elaborating")
@@ -121,7 +122,7 @@ def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs, args):
     print("Elaborating")
     print("***********\033[0m")
     elaboration_log_path = cfg.pwd + "/results/" + lib_name + ".elab.log"
-    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax " + args + " --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " --log " + elaboration_log_path)
+    vivado.run_bin("xelab", " --incr -dup_entity_as_module -relax -debug all " + args + " --O0 -v 0 -timescale 1ns/1ps -L " + ip_name + "=./out/" + ip_name + " -L " + lib_name + "=./out/" + lib_name + " --snapshot " + top_dv_constructs[0] + " " + top_dv_constructs_string + " --log " + elaboration_log_path)
     add_elab_to_history_log(ip_name, elaboration_log_path)
     
 
