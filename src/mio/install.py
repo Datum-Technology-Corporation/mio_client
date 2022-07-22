@@ -1,11 +1,11 @@
-# Copyright Datum Technology Corporation
+# Copyright 2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 import yaml
 from yaml import SafeLoader
 
-import cfg
-import discovery
+import mio.cfg
+import mio.discovery
 
 import requests
 import getpass
@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 from base64 import b64decode
 import os
+import shutil
 
 
 base_url          = "https://mooreio.org"#"http://localhost:8080"
@@ -53,21 +54,27 @@ def install_mio_ip(name, location):
                         found_payload = True
                         break
     if found_payload:
-        filename = Path(name + '.tgz')
+        filename = Path(location + "/" + name + '.tgz')
         filename.write_bytes(b64decode(payload))
         tar = tarfile.open(filename, "r:gz")
-        tar.extractall(location + "/" + name)
+        ip_destination_path = location + "/" + name
+        if os.path.exists(ip_destination_path):
+            shutil.rmtree(ip_destination_path)
+        os.mkdir(ip_destination_path)
+        tar.extractall(ip_destination_path)
         tar.close()
-        os.remove(location + "/" + name)
+        os.remove(filename)
     else:
         print("ERROR: Could not find IP '" + name + "' on Moore.io server")
 
 
 
-def login():
+def login(username, password):
     global headers
-    username = input("Please enter your Moore.io account username: ")
-    password = getpass.getpass(prompt='Password: ')
+    if username == None or username == "":
+        username = input("Please enter your Moore.io account username: ")
+    if password == None or password == "":
+        password = getpass.getpass(prompt='Password: ')
     payload = {
         "username": username,
         "password": password,
@@ -90,16 +97,24 @@ def get_ips_for_target(ip_name):
     return dependencies
 
 
-def install_mio_ips(name, ip_list, location):
-    login()
+def install_mio_ips(name, ip_list, location, username, password):
     if ip_list == None:
         print("No dependencies were found in " + name + "'s ip.yml")
     else:
+        login(username, password)
         for ip in ip_list:
             install_mio_ip(ip, location)
 
 
-
-def install_all_ips_for_target(target_name):
+def install_all_ips_for_target(target_name, global_install, username, password):
     ip_list = get_ips_for_target(target_name)
-    install_mio_ips(target_name, ip_list, cfg.dependencies_path)
+    
+    if global_install:
+        location = cfg.user_global_ips_path
+    else:
+        location = cfg.dependencies_path
+    if not os.path.exists(cfg.mio_data_dir):
+        os.mkdir(cfg.mio_data_dir)
+    if not os.path.exists(location):
+        os.mkdir(location)
+    install_mio_ips(target_name, ip_list, location, username, password)

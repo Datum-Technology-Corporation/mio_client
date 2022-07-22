@@ -1,19 +1,19 @@
-# Copyright Datum Technology Corporation
+# Copyright 2021-2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
 
-import cfg
-import clean
-import cmp
-import cov
-import dox
-import history
-import results
-import sim
-import vivado
-import discovery
-import utilities
+import mio.cfg
+import mio.clean
+import mio.cmp
+import mio.cov
+import mio.dox
+import mio.history
+import mio.results
+import mio.sim
+import mio.vivado
+import mio.discovery
+import mio.utilities
 
 import re
 import yaml
@@ -117,6 +117,10 @@ def do_dut_fsoc_elab(ip_name, lib_name, top_dv_constructs, args):
     top_dv_constructs_string = ""
     for construct in top_dv_constructs:
         top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
+    if (cfg.glb_cfg['sim_debug']):
+        debug_str = " --debug all "
+    else:
+        debug_str = " --debug typical "
     print("\033[0;36m***********")
     print("Elaborating")
     print("***********\033[0m")
@@ -142,7 +146,7 @@ def do_elab(lib_name, top_dv_constructs, args):
     for construct in top_dv_constructs:
         top_dv_constructs_string = top_dv_constructs_string + " " + lib_name + "." + construct
     
-    if (cfg.sim_debug):
+    if (cfg.glb_cfg['sim_debug']):
         debug_str = " --debug all "
     else:
         debug_str = " --debug typical "

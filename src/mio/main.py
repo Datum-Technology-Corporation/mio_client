@@ -1,7 +1,5 @@
-#! /usr/bin/python3 
-# -*- coding: UTF-8 -*-
 ########################################################################################################################
-# Copyright 2021 Datum Technology Corporation
+# Copyright 2021-2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
@@ -15,17 +13,17 @@
                               ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝ ╚═════╝
                                   Moore.io (`mio`) Command Line Interface (CLI) - v1p0
 Usage:
-  mio install <target>
-  mio all     <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
-  mio cmp     <target>
-  mio elab    <target>  [-d | --debug]
-  mio cpel    <target>
-  mio sim     <target>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-c | --cov] [-- <args>]
+  mio install <ip>
+  mio all     <ip>  [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-q | --noclean]  [-c | --cov] [-- <args>]
+  mio cmp     <ip>
+  mio elab    <ip>  [-d | --debug]
+  mio cpel    <ip>
+  mio sim     <ip>  [-C] [-E] [-S] [-t <test_name>]  [-s <seed>]  [-v <level>]  [-g | --gui]  [-w | --waves]  [-c | --cov] [-- <args>]
   mio clean
-  mio results    <target> <filename>
-  mio cov        <target>
-  mio dox <name> <target>
-  mio install    <target>
+  mio results    <ip> <filename>
+  mio cov        <ip>
+  mio dox        <ip>
+  mio install    <ip> [-g | --global]  [-u <username>]  [-p <password>]
   mio (-h | --help)
   mio --version
 
@@ -45,20 +43,22 @@ Examples:
 """
 
 
-import cfg
-import clean
-import cmp
-import cov
-import dox
-import elab
-import history
-import results
-import sim
-import utilities
-import vivado
-import install
-import discovery
 
+import mio.cfg
+import mio.clean
+import mio.cmp
+import mio.cov
+import mio.dox
+import mio.elab
+import mio.history
+import mio.results
+import mio.sim
+import mio.utilities
+import mio.vivado
+import mio.install
+import mio.discovery
+
+import sys
 from docopt     import docopt
 import os
 import subprocess
@@ -71,8 +71,8 @@ import re
 
 
 
-def do_dispatch(args):
-    cfg.glb_args = args
+def do_dispatch():
+    args = cfg.glb_args
     
     if (cfg.dbg):
         print("Call to do_dispatch()")
@@ -91,6 +91,25 @@ def do_dispatch(args):
         args['elab' ] = False
         args['sim'  ] = False
     
+    if args['sim']:
+        if not args['-C'] and not args['-E'] and not args['-S']:
+            # TODO Add IP cache and use info to only build what is necessary
+            args['cmp'  ] = True
+            args['elab' ] = True
+            args['sim'  ] = True
+        else:
+            if args['-C']:
+                args['cmp'  ] = True
+            else:
+                args['cmp'  ] = False
+            if args['-E']:
+                args['elab' ] = True
+            else:
+                args['elab' ] = False
+            if args['-S']:
+                args['sim' ] = True
+            else:
+                args['sim' ] = False
     if args['all']:
         args['cmp'  ] = True
         args['elab' ] = True
@@ -124,6 +143,9 @@ def do_dispatch(args):
     else:
         cfg.glb_cfg['sim_gui'] = False
     
+    if 'sim_debug' not in cfg.glb_cfg:
+        cfg.glb_cfg['sim_debug'] = False
+    
     if args['<args>'] == None:
         all_args = []
     else:
@@ -141,33 +163,33 @@ def do_dispatch(args):
         else:
             plus_args.append(arg)
     
-    
-    
     if args['clean']:
         clean.do_clean()
     if args['cmp']:
         out_path = cfg.pwd + "/out"
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        cmp.cmp_rtl(args['<target>'], args_str)
-        cmp.cmp_dv (args['<target>'], args_str)
+        cmp.cmp_rtl(args['<ip>'], args_str)
+        cmp.cmp_dv (args['<ip>'], args_str)
     if args['elab']:
-        elab.elab(args['<target>'], args_str)
+        elab.elab(args['<ip>'], args_str)
     if args['sim']:
-        sim.sim(args['<target>'], args['<test_name>'], args['<seed>'], args['<level>'], plus_args)
+        sim.sim(args['<ip>'], args['<test_name>'], args['<seed>'], args['<level>'], plus_args)
     if args['results']:
-        results.do_parse_results(args['<target>'], args['<filename>'])
+        results.do_parse_results(args['<ip>'], args['<filename>'])
     if args['cov']:
-        cov.gen_cov_report(args['<target>'])
+        cov.gen_cov_report(args['<ip>'])
     if args['dox']:
-        dox.gen_doxygen(args['<name>'], args['<target>'])
+        dox.gen_doxygen(args['<ip>'])
     if args['install']:
-        install.install_all_ips_for_target(args['<target>'])
+        if args['--global'] or args['-g']:
+            args['--global'] = True
+        install.install_all_ips_for_target(args['<ip>'], args['--global'], args['<username>'], args['<password>'])
 
 
-if __name__ == '__main__':
-    args = docopt(__doc__, version='Moore.io Client Command Line Interface - v0.1')
+def main():
+    cfg.glb_args = docopt(argv=sys.argv,doc=__doc__, version='Moore.io Client Command Line Interface - v0.1')
     if (cfg.dbg):
-        print(args)
-    do_dispatch(args)
+        print(cfg.glb_args)
+    do_dispatch()
 

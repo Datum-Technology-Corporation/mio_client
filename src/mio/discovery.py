@@ -1,17 +1,17 @@
-# Copyright Datum Technology Corporation
+# Copyright 2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
 
-import cfg
-import clean
-import cmp
-import cov
-import dox
-import elab
-import history
-import results
-import vivado
+import mio.cfg
+import mio.clean
+import mio.cmp
+import mio.cov
+import mio.dox
+import mio.elab
+import mio.history
+import mio.results
+import mio.vivado
 
 import os
 import toml
@@ -53,13 +53,12 @@ def load_configuration():
         if cfg.dbg:
             print("Found Moore.io user TOML Configuration file at " + user_toml_file_path)
     merge_dict(cfg.configuration, toml.load(project_toml_file_path))
-    print("Final configuration:\n" + toml.dumps(cfg.configuration))
+    if cfg.dbg:
+        print("Final configuration:\n" + toml.dumps(cfg.configuration))
     
     cfg.project_name      = cfg.configuration.get("project", {}).get("name")
     cfg.sim_dir           = os.path.join(cfg.project_dir, cfg.configuration.get("simulation", {}).get("root-path"))
     cfg.sim_results_dir   = os.path.join(cfg.sim_dir    , cfg.configuration.get("simulation", {}).get("results-dir"))
-    cfg.history_file_path = os.path.join(cfg.sim_dir    , cfg.configuration.get("simulation", {}).get("history-filename"))
-    cfg.sim_output_dir    = os.path.join(cfg.sim_dir    , cfg.configuration.get("simulation", {}).get("output-dir"))
     cfg.ip_paths          = cfg.configuration.get("ip", {}).get("paths")
     cfg.test_results_path_template = cfg.configuration.get("simulation", {}).get("test-result-path-template")
 
@@ -92,7 +91,7 @@ def search_dir_for_ip(path):
 
 def set_env_vars():
     for ip in ip_metadata:
-        env_var_name = ip_metadata[ip]["ip"]["type"] + "_" + ip_metadata[ip]["ip"]["name"] + "_SRC_PATH"
+        env_var_name = ip_metadata[ip]["ip"]["name"] + "_SRC_PATH"
         env_var_name = env_var_name.upper()
         ip_src_path = os.path.join(ip_paths[ip], ip_metadata[ip]["structure"]["src-path"])
         os.environ[env_var_name] = ip_src_path

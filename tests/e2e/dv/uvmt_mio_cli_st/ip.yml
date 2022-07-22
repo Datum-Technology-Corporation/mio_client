@@ -33,7 +33,7 @@ dependencies:
   - { name: "uvml_sb"  , version: "~1.0" }
 
 hdl-src:
-  top-constructs: ["uvmt_mio_cli_st_tb", "uvml_logs_sim_summary"]
+  top-constructs: ["uvmt_mio_cli_st_tb", "uvml_sim_summary"]
   directories: [".", "tb", "tests"]
   test-paths: ["tests"]
   test-name-template: "uvmt_mio_cli_st_{{ name }}_test_c"

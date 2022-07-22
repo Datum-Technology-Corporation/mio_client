@@ -1,0 +1,12 @@
+include bin/doxygen.cfg
+include bin/idv_doxyfilter_sv.pl
+include bin/mio.toml
+include bin/plantuml.jar
+include templates/regression_results.html.j2
+include templates/regression_results.junit.xml.j2
+include templates/vivado.flist.j2
+include templates/vcs.flist.j2
+include templates/nc.flist.j2
+include templates/questa.flist.j2
+include templates/metrics.flist.j2
+include templates/aldec.flist.j2

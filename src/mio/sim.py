@@ -1,19 +1,19 @@
-# Copyright Datum Technology Corporation
+# Copyright 2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
 
-import cfg
-import clean
-import cmp
-import cov
-import dox
-import elab
-import history
-import results
-import vivado
-import discovery
-import utilities
+import mio.cfg
+import mio.clean
+import mio.cmp
+import mio.cov
+import mio.dox
+import mio.elab
+import mio.history
+import mio.results
+import mio.vivado
+import mio.discovery
+import mio.utilities
 
 import os
 from datetime import datetime
@@ -94,6 +94,7 @@ def do_sim(lib_name, name, seed, verbosity, plus_args):
     tb_ip_path = discovery.ip_paths[lib_name]
     
     orig_plus_args = list(plus_args)
+    plus_args.append("UVM_NO_RELNOTES")
     plus_args.append("SIM_DIR_RESULTS="                 + cfg.sim_results_dir)
     plus_args.append("UVM_TESTNAME="                    + test_name)
     plus_args.append("UVML_FILE_BASE_DIR_SIM="          + cfg.sim_dir)

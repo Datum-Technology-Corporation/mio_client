@@ -1,17 +1,17 @@
-# Copyright Datum Technology Corporation
+# Copyright 2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
 
-import cfg
-import cmp
-import cov
-import dox
-import elab
-import history
-import results
-import sim
-import vivado
+import mio.cfg
+import mio.cmp
+import mio.cov
+import mio.dox
+import mio.elab
+import mio.history
+import mio.results
+import mio.sim
+import mio.vivado
 
 import shutil
 import os

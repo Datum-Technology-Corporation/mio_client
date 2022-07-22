@@ -1,25 +1,25 @@
-// Copyright 2021 Datum Technology Corporation
+// Copyright 2021-2022 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Libraries
--f ${DV_UVM_SRC_PATH}/uvm_pkg.flist
--f ${DV_UVML_SRC_PATH}/uvml_pkg.flist
--f ${DV_UVML_LOGS_SRC_PATH}/uvml_logs_pkg.flist
--f ${DV_UVML_SB_SRC_PATH}/uvml_sb_pkg.flist
+-f ${UVM_SRC_PATH}/uvm_pkg.flist
+-f ${UVML_SRC_PATH}/uvml_pkg.flist
+-f ${UVML_LOGS_SRC_PATH}/uvml_logs_pkg.flist
+-f ${UVML_SB_SRC_PATH}/uvml_sb_pkg.flist
 
 // Agents
--f ${DV_UVMA_MIO_CLI_SRC_PATH}/uvma_mio_cli_pkg.flist
+-f ${UVMA_MIO_CLI_SRC_PATH}/uvma_mio_cli_pkg.flist
 
 // Environments
--f ${DV_UVME_MIO_CLI_ST_SRC_PATH}/uvme_mio_cli_st_pkg.flist
+-f ${UVME_MIO_CLI_ST_SRC_PATH}/uvme_mio_cli_st_pkg.flist
 
 // Moore.io CLI Testing Grounds test bench Directories
-+incdir+${DV_UVMT_MIO_CLI_ST_SRC_PATH}
-+incdir+${DV_UVMT_MIO_CLI_ST_SRC_PATH}/seq
-+incdir+${DV_UVMT_MIO_CLI_ST_SRC_PATH}/tb
-+incdir+${DV_UVMT_MIO_CLI_ST_SRC_PATH}/tests
++incdir+${UVMT_MIO_CLI_ST_SRC_PATH}
++incdir+${UVMT_MIO_CLI_ST_SRC_PATH}/seq
++incdir+${UVMT_MIO_CLI_ST_SRC_PATH}/tb
++incdir+${UVMT_MIO_CLI_ST_SRC_PATH}/tests
 
 // Moore.io CLI Testing Grounds tests (includes constants/macros/types meant for test bench)
-${DV_UVMT_MIO_CLI_ST_SRC_PATH}/uvmt_mio_cli_st_pkg.sv
+${UVMT_MIO_CLI_ST_SRC_PATH}/uvmt_mio_cli_st_pkg.sv

@@ -1,5 +1,14 @@
-# Copyright Datum Technology Corporation
+#! /usr/bin/python3 
+# -*- coding: UTF-8 -*-
 ########################################################################################################################
+# Copyright 2021-2022 Datum Technology Corporation
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 ########################################################################################################################
 
+
+
+from .main import main
+
+
+if __name__ == "__main__":
+    main()
